@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 // Increase these to make the network denser / more visible.
 const MIN_NODES = 100;
 const NODE_AREA_PX2 = 7000; // one node per this many px² — lower = denser
-const IDLE_CONNECT_LEFT = 110;   // left-side base connection radius (px)
+const IDLE_CONNECT_LEFT = 120;   // left-side base connection radius (px)
 const IDLE_CONNECT_RIGHT = 160;  // right-side base connection radius (px)
 const SCROLL_BOOST = 1.6;        // multiplier added at full scroll
 
@@ -96,12 +96,11 @@ export function BackgroundNetwork() {
       draw(time: number) {
         // Ambient pulse on top of scroll boost
         const pulse = (Math.sin(time * 0.8 + this.phase) + 1) * 0.5; // 0→1
-        const scrollBoost = scrollProg * 0.4;
 
         // Opacity ramps strongly from idle → full scroll
         const baseOpacity = this.isRight
           ? 0.55 + scrollProg * 0.55   // right: 0.55 → 1.1 (capped at 1)
-          : 0.38 + scrollProg * 0.45;  // left:  0.38 → 0.83
+          : 0.45 + scrollProg * 0.45;  // left:  0.45 → 0.90
         const opacity = baseOpacity + pulse * 0.08;
 
         const r = this.baseR + scrollProg * 0.6 + pulse * 0.3;
@@ -114,13 +113,17 @@ export function BackgroundNetwork() {
     }
 
     // ── Build Node Pool ────────────────────────────────────────────────────
-    // Ensure left side has at least 40% of nodes
-    const totalNodes = Math.max(MIN_NODES, Math.floor((W * H) / NODE_AREA_PX2));
-    const leftGuarantee = Math.floor(totalNodes * 0.42);
-    const nodes: Node[] = [
-      ...Array.from({ length: leftGuarantee }, () => new Node(true)),
-      ...Array.from({ length: totalNodes - leftGuarantee }, () => new Node(false)),
-    ];
+    let nodes: Node[] = [];
+
+    const buildNodes = () => {
+      const totalNodes = Math.max(MIN_NODES, Math.floor((W * H) / NODE_AREA_PX2));
+      const leftGuarantee = Math.floor(totalNodes * 0.42);
+      nodes = [
+        ...Array.from({ length: leftGuarantee }, () => new Node(true)),
+        ...Array.from({ length: totalNodes - leftGuarantee }, () => new Node(false)),
+      ];
+    };
+    buildNodes();
 
     // ── Animation Loop ─────────────────────────────────────────────────────
     let rafId: number;
@@ -174,14 +177,27 @@ export function BackgroundNetwork() {
     draw();
 
     // ── Resize ─────────────────────────────────────────────────────────────
-    const onResize = () => setSize();
+    let resizeTimeout: NodeJS.Timeout;
+    const onResize = () => {
+      clearTimeout(resizeTimeout);
+      // Debounce the heavy rebuild operation
+      resizeTimeout = setTimeout(() => {
+        setSize();
+        buildNodes();
+      }, 150);
+    };
+    // Also attach standard setSize so it feels responsive instantly,
+    // but the node rebuilding happens slightly after
+    const onInstantResize = () => setSize();
     window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onInstantResize);
 
-    // ── Cleanup ────────────────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(rafId);
+      clearTimeout(resizeTimeout);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onInstantResize);
     };
   }, []);
 
