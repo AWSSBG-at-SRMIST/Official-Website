@@ -1,17 +1,21 @@
 .team-category-scroller {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
   width: 100%;
-  max-width: 280px;
   margin-bottom: 2rem;
 }
 
 .team-category-scroller.mobile {
   max-width: 100%;
   flex-direction: row;
+  justify-content: flex-start;
   overflow-x: auto;
   padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   gap: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: var(--brand-primary) transparent;
@@ -59,7 +63,8 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--brand-dark);
-  white-space: nowrap;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .team-category-item.active .category-label {
@@ -80,10 +85,13 @@
 @media (max-width: 768px) {
   .team-category-scroller.desktop {
     flex-direction: row;
+    justify-content: flex-start;
     gap: 0.5rem;
     max-width: 100%;
     overflow-x: auto;
     padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .team-category-item {
@@ -95,6 +103,7 @@
 
   .category-label {
     font-size: 0.75rem;
+    white-space: nowrap;
   }
 
   .category-indicator {
@@ -115,5 +124,6 @@
 
   .category-label {
     font-size: 0.7rem;
+    white-space: nowrap;
   }
 }

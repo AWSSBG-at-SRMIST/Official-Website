@@ -119,19 +119,6 @@ export const technicalCategory: OrgNode[] = [
               linkedinUrl: '#',
             },
           },
-          {
-            member: {
-              id: 'tech-dev-assoc-2',
-              name: 'Mike K.',
-              role: 'Associate - Backend',
-              image: '',
-              imageAlt: '',
-              level: 'associate',
-              initials: 'MK',
-              domains: ['Node.js', 'DynamoDB'],
-              linkedinUrl: '#',
-            },
-          },
         ],
       },
       {
