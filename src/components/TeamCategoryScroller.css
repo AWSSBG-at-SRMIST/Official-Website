@@ -3,33 +3,26 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   width: 100%;
-  margin-bottom: 2rem;
-}
-
-.team-category-scroller.mobile {
   max-width: 100%;
-  flex-direction: row;
-  justify-content: flex-start;
+  margin-bottom: 2rem;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  gap: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: var(--brand-primary) transparent;
+  padding-bottom: 0.5rem;
 }
 
-.team-category-scroller.mobile::-webkit-scrollbar {
+/* Hide scrollbars but keep functionality by default, style it cleanly */
+.team-category-scroller::-webkit-scrollbar {
   height: 4px;
 }
 
-.team-category-scroller.mobile::-webkit-scrollbar-track {
+.team-category-scroller::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.team-category-scroller.mobile::-webkit-scrollbar-thumb {
+.team-category-scroller::-webkit-scrollbar-thumb {
   background: var(--brand-primary);
   border-radius: 2px;
 }
@@ -43,7 +36,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
-  overflow: hidden;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .team-category-item:hover {
@@ -63,8 +57,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--brand-dark);
-  white-space: normal;
-  word-wrap: break-word;
+  white-space: nowrap;
 }
 
 .team-category-item.active .category-label {
@@ -81,29 +74,28 @@
   border-radius: 3px 3px 0 0;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .team-category-scroller.desktop {
-    flex-direction: row;
+/* Responsive Overrides via Pure CSS Media Queries */
+@media (max-width: 900px) {
+  .team-category-scroller {
     justify-content: flex-start;
-    gap: 0.5rem;
-    max-width: 100%;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-category-scroller {
+    margin-bottom: 1.5rem;
+    gap: 0.5rem;
   }
 
   .team-category-item {
     padding: 0.75rem 1rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .category-label {
     font-size: 0.75rem;
-    white-space: nowrap;
   }
 
   .category-indicator {
@@ -113,17 +105,14 @@
 
 @media (max-width: 480px) {
   .team-category-scroller {
-    max-width: 100%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .team-category-item {
     padding: 0.5rem 0.75rem;
-    font-size: 0.7rem;
   }
 
   .category-label {
     font-size: 0.7rem;
-    white-space: nowrap;
   }
 }

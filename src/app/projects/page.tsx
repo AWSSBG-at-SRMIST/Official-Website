@@ -23,7 +23,7 @@ export default function Projects() {
   return (
     <>
       <Navbar />
-      <main className="pt-32 pb-stack-lg bg-background min-h-screen">
+      <main className="pt-32 pb-stack-lg min-h-screen">
         {/* Hero Section */}
         <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-10 md:mb-16">
           <div className="max-w-3xl">
@@ -37,7 +37,7 @@ export default function Projects() {
         </section>
 
         {/* Filters & Categories */}
-        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-10 md:mb-12 sticky top-[72px] z-40 py-4 bg-background/90 backdrop-blur-sm border-b border-outline-variant/10">
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-10 md:mb-12 py-4 border-b border-outline-variant/10">
           <div className="flex items-center w-full overflow-x-auto no-scrollbar scroll-smooth">
             <span className="font-label-md text-on-surface-variant mr-4 whitespace-nowrap shrink-0">Filter by:</span>
             <div className="flex gap-2.5">

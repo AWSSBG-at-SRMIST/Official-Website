@@ -146,11 +146,11 @@ const OrgTreeNode = ({
                 {/* Horizontal Sibling Line */}
                 {node.children!.length > 1 && (
                   <div className="hidden md:flex absolute top-0 left-0 right-0">
-                    <div 
+                    <div
                       className={`flex-1 h-px ${idx === 0 ? 'invisible' : 'bg-brand-slate'}`}
                       style={{ backgroundColor: idx === 0 ? 'transparent' : 'var(--brand-slate)' }}
                     />
-                    <div 
+                    <div
                       className={`flex-1 h-px ${idx === node.children!.length - 1 ? 'invisible' : 'bg-brand-slate'}`}
                       style={{ backgroundColor: idx === node.children!.length - 1 ? 'transparent' : 'var(--brand-slate)' }}
                     />
@@ -190,15 +190,15 @@ const PresidiumTreeNodes = () => {
           {/* Vertical Drop from VP */}
           <div className="w-px h-6 sm:h-8 bg-brand-slate" style={{ backgroundColor: 'var(--brand-slate)' }} />
         </div>
-        
+
         {/* Horizontal connector line linking the President and VP drops */}
-        <div 
-          className="hidden md:block absolute bottom-0 h-px" 
-          style={{ 
-            left: '25%', 
-            right: '25%', 
+        <div
+          className="hidden md:block absolute bottom-0 h-px"
+          style={{
+            left: '25%',
+            right: '25%',
             backgroundColor: 'var(--brand-slate)'
-          }} 
+          }}
         />
       </div>
 
@@ -212,19 +212,19 @@ const PresidiumTreeNodes = () => {
             {/* Horizontal Line for sibling connection */}
             {directors.length > 1 && (
               <div className="hidden md:flex absolute top-0 left-0 right-0">
-                <div 
-                  className={`flex-1 h-px ${idx === 0 ? 'invisible' : 'bg-brand-slate'}`} 
-                  style={{ backgroundColor: idx === 0 ? 'transparent' : 'var(--brand-slate)' }} 
+                <div
+                  className={`flex-1 h-px ${idx === 0 ? 'invisible' : 'bg-brand-slate'}`}
+                  style={{ backgroundColor: idx === 0 ? 'transparent' : 'var(--brand-slate)' }}
                 />
-                <div 
-                  className={`flex-1 h-px ${idx === directors.length - 1 ? 'invisible' : 'bg-brand-slate'}`} 
-                  style={{ backgroundColor: idx === directors.length - 1 ? 'transparent' : 'var(--brand-slate)' }} 
+                <div
+                  className={`flex-1 h-px ${idx === directors.length - 1 ? 'invisible' : 'bg-brand-slate'}`}
+                  style={{ backgroundColor: idx === directors.length - 1 ? 'transparent' : 'var(--brand-slate)' }}
                 />
               </div>
             )}
             {/* Vertical drop to director */}
             <div className="w-px h-4 sm:h-6 bg-brand-slate" style={{ backgroundColor: 'var(--brand-slate)' }} />
-            
+
             {/* Director node and its sub-tree */}
             <OrgTreeNode node={directorNode} level={1} />
           </div>
@@ -265,79 +265,79 @@ export default function TeamsPage() {
 
   return (
     <><Navbar />
-    <main className="pt-32 pb-stack-lg bg-background">
-      {/* Hero Section */}
-      <header className="mb-12 md:mb-16">
-        <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-gutter items-end">
-            <div className="md:col-span-8">
-              <h1
-                className="font-display text-2xl sm:text-4xl md:text-[56px] mb-4 tracking-tighter leading-tight font-bold"
-                style={{ color: 'var(--brand-dark)' }}
-              >
-                The Architects.
-              </h1>
-              <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-sm sm:text-base">
-                The minds driving cloud innovation at SRMIST. We are a collective of
-                builders, engineers, and designers pushing the boundaries of what's
-                possible on AWS.
-              </p>
+      <main className="pt-32 pb-stack-lg">
+        {/* Hero Section */}
+        <header className="mb-12 md:mb-16">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-gutter items-end">
+              <div className="md:col-span-8">
+                <h1
+                  className="font-display text-2xl sm:text-4xl md:text-[56px] mb-4 tracking-tighter leading-tight font-bold"
+                  style={{ color: 'var(--brand-dark)' }}
+                >
+                  The Builders.
+                </h1>
+                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-sm sm:text-base">
+                  The minds driving cloud innovation at SRMIST. We are a collective of
+                  builders, engineers, and designers pushing the boundaries of what's
+                  possible on AWS.
+                </p>
+              </div>
+              <div className="md:col-span-4 flex justify-start md:justify-end pb-4">
+                <div
+                  className="w-16 h-1"
+                  style={{ backgroundColor: 'var(--brand-primary)' }}
+                ></div>
+              </div>
             </div>
-            <div className="md:col-span-4 flex justify-start md:justify-end pb-4">
-              <div
-                className="w-16 h-1"
-                style={{ backgroundColor: 'var(--brand-primary)' }}
-              ></div>
+          </div>
+        </header>
+
+        {/* Organization Section */}
+        <section
+          className="relative w-full py-8 md:py-12 px-4 sm:px-6 md:px-margin-desktop rounded-3xl shadow-[inset_0_2px_20px_rgba(0,0,0,0.02)] mx-auto max-w-container-max"
+          style={{ backgroundColor: 'rgba(37, 99, 235, 0.03)' }}
+        >
+          <div className="flex flex-col gap-8 items-center w-full">
+            {/* Category Selector above */}
+            <div className="w-full">
+              <TeamCategoryScroller
+                categories={categories}
+                activeIndex={activeCategory}
+                onCategoryChange={setActiveCategory}
+                isMobile={isMobile}
+              />
+            </div>
+
+            {/* Right Content - Organization Tree */}
+            <div className="w-full overflow-x-auto pb-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={categories[activeCategory].id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex justify-center items-start w-full md:min-w-max p-4"
+                >
+                  {categories[activeCategory].id === 'presidium' ? (
+                    <PresidiumTreeNodes />
+                  ) : (
+                    <div className="flex flex-col items-center w-full">
+                      {currentData.map((node, idx) => (
+                        <div key={`${node.member.id}-${idx}`} className="w-full flex flex-col items-center">
+                          <OrgTreeNode node={node} level={0} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
-        </div>
-      </header>
-
-      {/* Organization Section */}
-      <section
-        className="relative w-full py-8 md:py-12 px-4 sm:px-6 md:px-margin-desktop rounded-3xl shadow-[inset_0_2px_20px_rgba(0,0,0,0.02)] mx-auto max-w-container-max"
-        style={{ backgroundColor: 'rgba(37, 99, 235, 0.03)' }}
-      >
-        <div className="flex flex-col gap-8 items-center w-full">
-          {/* Category Selector above */}
-          <div className="w-full">
-            <TeamCategoryScroller
-              categories={categories}
-              activeIndex={activeCategory}
-              onCategoryChange={setActiveCategory}
-              isMobile={isMobile}
-            />
-          </div>
-
-          {/* Right Content - Organization Tree */}
-          <div className="w-full overflow-x-auto pb-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={categories[activeCategory].id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="flex justify-center items-start w-full md:min-w-max p-4"
-              >
-                {categories[activeCategory].id === 'presidium' ? (
-                  <PresidiumTreeNodes />
-                ) : (
-                  <div className="flex flex-col items-center w-full">
-                    {currentData.map((node, idx) => (
-                      <div key={`${node.member.id}-${idx}`} className="w-full flex flex-col items-center">
-                        <OrgTreeNode node={node} level={0} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-    </main>
-    <Footer />
+        </section>
+      </main>
+      <Footer />
     </>
   );
 }
