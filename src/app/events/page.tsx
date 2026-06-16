@@ -27,7 +27,7 @@ export default function EventsPage() {
         <EventsHero />
 
         {/* 2. Featured Event Section */}
-        <FeaturedEvent event={featuredEvent} />
+        {/* <FeaturedEvent event={featuredEvent} /> */}
 
         {/* 3. Upcoming Events Section */}
         <section className="py-24 max-w-container-max mx-auto px-margin-desktop">
@@ -47,7 +47,7 @@ export default function EventsPage() {
         </section>
 
         {/* 4. Builders In Action Section */}
-        <BuildersInAction />
+        {/* <BuildersInAction /> */}
 
         {/* 5. Past Highlights Section */}
         <section className="py-24 max-w-container-max mx-auto px-margin-desktop">

@@ -10,11 +10,11 @@ export function CtaSection() {
             Ready to Build <span className="text-primary">Something Meaningful?</span>
           </h2>
           <p className="text-on-surface-variant text-body-md md:text-body-lg max-w-lg mx-auto relative z-10">
-            Join 1000+ students at SRMIST who are defining the future of cloud
+            Join 150+ students who are defining the future of cloud
             and technology.
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-4 relative z-10">
-            <Link href="/join" className="bg-primary text-on-primary px-8 py-3 rounded-xl font-label-md font-bold hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
+            <Link href="https://www.meetup.com/awssbg-srmist/events/" target="_blank" className="bg-primary text-on-primary px-8 py-3 rounded-xl font-label-md font-bold hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
               Join Community
             </Link>
             <Link href="/events" className="border border-outline-variant text-on-surface px-8 py-3 rounded-xl font-label-md font-bold hover:bg-surface-variant hover:-translate-y-0.5 transition-all duration-300">

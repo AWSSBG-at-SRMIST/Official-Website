@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, MapPin, ArrowRight, Flame, Globe, Users } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Flame, Globe, Users, Link2Icon } from "lucide-react";
 import { Event } from "./types";
+import Link from "next/link";
 
 interface EventCardProps {
   event: Event;
@@ -92,10 +93,17 @@ export function EventCard({ event, isSecondaryFeatured = false }: EventCardProps
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 border border-primary/15 text-primary">
                 <Users size={12} strokeWidth={2.2} />
                 <span className="text-[11px] font-bold tabular-nums">{event.registrantsCount}</span>
-                <span className="text-[11px] font-medium text-on-surface-variant">attending</span>
+                <span className="text-[11px] font-medium text-on-surface-variant">{event.status=="upcoming"?
+                "attending":"attended"}</span>
               </div>
             )}
-
+            {event.detailsLink && (
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 border border-primary/15 text-primary">
+                <Link2Icon size={12} strokeWidth={2.2} />
+                <Link href={event.detailsLink} target="_blank" className="text-[11px] font-bold tabular-nums">View Details</Link>
+                
+              </div>
+            )}
             {event.status === "upcoming" ? (
               <a
                 href={event.detailsLink || "#"}

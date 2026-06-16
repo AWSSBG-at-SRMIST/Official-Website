@@ -7,7 +7,7 @@ const domains = [
     title: "Technical",
     description:
       "Deep dive into serverless applications, full-stack development, modern DevOps, and scalable architecture.",
-    subDomains: ["Development", "AI / ML", "Cloud & DevOps"],
+    subDomains: ["Software Development", "AI & ML", "Cloud & DevOps"],
     href: "/domains/technical",
   },
   {
@@ -15,7 +15,7 @@ const domains = [
     title: "Corporate & Events",
     description:
       "Master enterprise cloud architecture, security compliance, project management, and system reliability.",
-    subDomains: ["Events", "Public Relations", "Sponsorship", "HR & Admin"],
+    subDomains: ["Events", "PR & Marketing", "Sponsorship", "HR & Admin"],
     href: "/domains/corporate",
   },
   {
@@ -68,14 +68,14 @@ export function ExploreDomains() {
                 </div>
 
                 {/* Explore link — pushed to bottom */}
-                <div className="mt-auto relative z-10">
+                {/* <div className="mt-auto relative z-10">
                   <Link
                     href={domain.href}
                     className="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all"
                   >
                     Explore Domain <ExternalLink size={18} />
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           );

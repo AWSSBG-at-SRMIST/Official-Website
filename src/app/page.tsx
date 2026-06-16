@@ -14,25 +14,35 @@ import { Footer } from "@/components/landing/Footer";
 export default function Home() {
   // Setup intersection observer for reveal animations
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
+  const hasAnimated = sessionStorage.getItem("landing-animated");
 
-    const observer = new IntersectionObserver((entries) => {
+  if (hasAnimated) {
+    document.querySelectorAll(".reveal").forEach((el) => {
+      el.classList.add("reveal-active", "active");
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("reveal-active", "active");
         }
       });
-    }, observerOptions);
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    }
+  );
 
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  sessionStorage.setItem("landing-animated", "true");
+
+  return () => observer.disconnect();
+}, []);
 
   return (
     <>
@@ -41,9 +51,9 @@ export default function Home() {
         <Hero />
         <CommunityMarquee />
         <AboutSection />
-        <WhatWeDoSection />
-        <ProjectShowcase />
+        {/* <WhatWeDoSection /> */}
         <ExploreDomains />
+        <ProjectShowcase />
         <CtaSection />
       </main>
       <Footer />

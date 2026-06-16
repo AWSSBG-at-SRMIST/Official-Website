@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/../public/logo-nobg.png"
 
 export function Footer() {
   return (
@@ -6,7 +8,8 @@ export function Footer() {
       <div className="max-w-container-max mx-auto px-margin-desktop py-stack-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-stack-lg mb-12">
           <div className="md:col-span-2 space-y-6">
-            <h3 className="font-headline-md text-headline-md font-bold text-on-surface">
+            <h3 className="font-headline-md flex items-center text-headline-md font-bold text-on-surface">
+            <Image src={Logo} alt="AWSSBG" height={60}/>
               AWS SBG SRMIST
             </h3>
             <p className="text-on-surface-variant max-w-sm text-body-md">
@@ -34,7 +37,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-on-surface-variant font-body-md">
               <li>
-                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/about">
+                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/#about">
                   About Us
                 </Link>
               </li>
@@ -44,7 +47,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/join">
+                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="https://www.meetup.com/awssbg-srmist/" target="_blank">
                   Join Us
                 </Link>
               </li>
@@ -66,18 +69,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/projects">
+                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/#projects">
                   Project Hub
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/events">
                   Events Calendar
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:text-primary transition-colors hover:translate-x-1 inline-block" href="/learning-paths">
-                  Learning Paths
                 </Link>
               </li>
             </ul>
@@ -87,14 +85,14 @@ export function Footer() {
           <p className="text-on-surface-variant text-body-md font-label-md">
             © 2026 AWS Student Builder Group SRMIST. All rights reserved.
           </p>
-          <div className="flex gap-6 text-on-surface-variant text-label-md">
+          {/* <div className="flex gap-6 text-on-surface-variant text-label-md">
             <Link className="hover:text-primary transition-colors" href="/privacy-policy">
               Privacy Policy
             </Link>
             <Link className="hover:text-primary transition-colors" href="/terms-of-service">
               Terms of Service
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
