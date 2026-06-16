@@ -37,6 +37,10 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-slate: var(--brand-slate);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -143,6 +147,10 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --brand-primary: #2563EB;
+  --brand-primary-light: #3B82F6;
+  --brand-dark: #0F172A;
+  --brand-slate: #64748B;
 }
 
 .dark {
@@ -177,6 +185,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --brand-primary: #2563EB;
+  --brand-primary-light: #3B82F6;
+  --brand-dark: #0F172A;
+  --brand-slate: #64748B;
 }
 
 @layer base {
@@ -186,6 +198,9 @@
   html, body {
     background: transparent;
     color: var(--foreground);
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
@@ -266,4 +281,40 @@
 @utility glass {
   backdrop-filter: blur(12px);
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-sm;
+  }
+
+  .interactive-element {
+    @apply cursor-pointer;
+  }
+
+  .org-line-vertical {
+    @apply h-8 md:h-12 flex justify-center;
+  }
+
+  .org-line-vertical::before {
+    @apply w-px bg-gradient-to-b from-[var(--brand-slate)]/50 via-[var(--brand-slate)]/20 to-transparent content-[''];
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-sm;
+  }
+
+  .interactive-element {
+    @apply cursor-pointer;
+  }
+
+  .org-line-vertical {
+    @apply h-8 md:h-12 flex justify-center;
+  }
+
+  .org-line-vertical::before {
+    @apply w-px bg-gradient-to-b from-[var(--brand-slate)]/50 via-[var(--brand-slate)]/20 to-transparent content-[''];
+  }
 }
