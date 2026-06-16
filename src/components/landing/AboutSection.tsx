@@ -5,7 +5,7 @@ export function AboutSection() {
         <div className="space-y-stack-md">
           <h2 className="font-headline-lg text-headline-lg">Built for Builders</h2>
           <p className="font-body-lg text-body-lg text-on-surface-variant">
-            At AWS SBG SRMIST, we believe that the best way to learn is by
+            At AWS Student Builder Group SRMIST, we believe that the best way to learn is by
             getting your hands dirty. Our community is structured to provide
             students with real-world problems and the modern toolsets required
             to solve them.
