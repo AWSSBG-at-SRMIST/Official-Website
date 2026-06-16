@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TeamCategoryScroller from '@/components/TeamCategoryScroller';
 import { Navbar } from '@/components/landing/Navbar';
@@ -14,7 +14,20 @@ import {
   OrgNode
 } from '@/data/teamStructure';
 
+const ExpandedCardContext = createContext<{
+  expandedId: string | null;
+  setExpandedId: (id: string | null) => void;
+} | null>(null);
+
 const TeamCard = ({ member, level }: { member: TeamMember; level?: string }) => {
+  const context = useContext(ExpandedCardContext);
+  const isExpanded = context ? context.expandedId === member.id : false;
+  const setIsExpanded = (val: boolean) => {
+    if (context) {
+      context.setExpandedId(val ? member.id : null);
+    }
+  };
+
   const isPresidium = level === 'presidium';
   const isDirector = level === 'director';
   const isManager = level === 'manager';
@@ -75,19 +88,30 @@ const TeamCard = ({ member, level }: { member: TeamMember; level?: string }) => 
   const visibleDomains = member.domains?.slice(0, maxDomains) ?? [];
   const extraDomains = (member.domains?.length ?? 0) - visibleDomains.length;
 
+  let expandedHeight = 'h-[210px]';
+  if (isPresidium) expandedHeight = 'h-[300px]';
+  else if (isDirector) expandedHeight = 'h-[260px]';
+  else if (isManager) expandedHeight = 'h-[220px]';
+
+  const currentHeightClass = isExpanded ? expandedHeight : `${initialHeight} ${hoverHeight}`;
+
   return (
     <motion.div
-      className={`${cardClasses} ${initialHeight} transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${hoverHeight} ${zIndex}`}
+      className={`${cardClasses} ${currentHeightClass} transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${zIndex} cursor-pointer`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsExpanded(!isExpanded);
+      }}
     >
       <div
-        className={`absolute inset-0 rounded-xl ${cardPadding} overflow-hidden bg-surface-container-lowest transition-all duration-500 group-hover:shadow-lg border-2`}
+        className={`absolute inset-0 rounded-xl ${cardPadding} overflow-hidden bg-surface-container-lowest transition-all duration-500 ${isExpanded ? 'shadow-lg' : 'group-hover:shadow-lg'} border-2`}
         style={{ borderColor }}
       >
         {/* COLLAPSED state */}
-        <div className="absolute inset-0 flex items-center gap-4 px-4 sm:px-5 opacity-100 group-hover:opacity-0 transition-opacity duration-200">
+        <div className={`absolute inset-0 flex items-center gap-4 px-4 sm:px-5 transition-opacity duration-200 ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100 group-hover:opacity-0'}`}>
           {member.image ? (
             <img
               alt={member.imageAlt}
@@ -113,7 +137,7 @@ const TeamCard = ({ member, level }: { member: TeamMember; level?: string }) => 
         </div>
 
         {/* EXPANDED state */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+        <div className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 gap-2 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-hover:delay-150'}`}>
           {member.image ? (
             <img
               alt={member.imageAlt}
@@ -164,6 +188,7 @@ const TeamCard = ({ member, level }: { member: TeamMember; level?: string }) => 
               aria-label={`${member.name} on LinkedIn`}
               className="inline-flex items-center gap-1.5 text-xs font-semibold hover:underline mt-1"
               style={{ color: 'var(--brand-primary)' }}
+              onClick={(e) => e.stopPropagation()}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 shrink-0">
                 <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z" />
@@ -307,6 +332,7 @@ const categoryData: { [key: string]: OrgNode[] } = {
 export default function TeamsPage() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -320,9 +346,9 @@ export default function TeamsPage() {
   const currentData = categoryData[categories[activeCategory].id];
 
   return (
-    <>
+    <ExpandedCardContext.Provider value={{ expandedId, setExpandedId }}>
       <Navbar />
-      <main className="pt-32 pb-stack-lg">
+      <main className="pt-32 pb-stack-lg" onClick={() => setExpandedId(null)}>
         {/* Hero Section */}
         <header className="mb-12 md:mb-16">
           <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
@@ -395,6 +421,6 @@ export default function TeamsPage() {
         </section>
       </main>
       <Footer />
-    </>
+    </ExpandedCardContext.Provider>
   );
 }
