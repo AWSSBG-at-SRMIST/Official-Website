@@ -1,3 +1,19 @@
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+  imageAlt: string;
+  domains?: string[];
+  initials?: string;
+  linkedinUrl?: string;
+  level?: "presidium" | "director" | "manager" | "associate";
+}
+
+export interface OrgNode {
+  member: TeamMember;
+  children?: OrgNode[];
+}
 export const presidiumAndDirectors: OrgNode[] = [
   {
     member: {
@@ -93,7 +109,7 @@ export const technicalCategory: OrgNode[] = [
           role: "AI/ML Manager",
           image: "/team/hemish-jain.png",
           imageAlt: "Hemish Jain",
-          level: "Manager",
+          level: "manager",
           linkedinUrl: "#",
         },
         children: [

@@ -10,8 +10,8 @@ import {
   technicalCategory,
   corporateCategory,
   creativesCategory,
-  OrgNode,
   TeamMember,
+  OrgNode
 } from '@/data/teamStructure';
 
 const TeamCard = ({ member, level }: { member: TeamMember; level?: string }) => {
