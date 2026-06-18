@@ -64,13 +64,9 @@ export function Loader() {
             transition={{ duration: 0.8, delay: 1.2, type: "spring" }}
             style={{ perspective: "1000px" }}
           >
-            <h1 className="text-display font-display font-black tracking-widest text-on-surface relative z-10">
-              AWS <span className="text-transparent bg-clip-text bg-gradient-to-br from-primary to-[#00d2ff]">SBG</span>
-              {/* 3D Extrusion illusion */}
-              <span className="absolute left-0 top-[2px] -z-10 text-on-surface/20 blur-[1px]">
-                AWS SBG
-              </span>
-            </h1>
+            <p className="font-display text-xs sm:text-sm font-bold tracking-[0.3em] text-on-surface-variant relative z-10">
+              AWS <span className="text-primary">SBG</span> AT SRMIST
+            </p>
           </motion.div>
 
           {/* Underline Progress */}
@@ -78,7 +74,7 @@ export function Loader() {
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "16rem", opacity: 1 }}
             transition={{ duration: 1.2, delay: 1.4, ease: "circOut" }}
-            className="h-[2px] mt-6 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_rgba(0,74,198,0.8)]"
+            className="h-[2px] mt-6 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_rgba(168,85,247,0.8)]"
           />
         </motion.div>
       )}

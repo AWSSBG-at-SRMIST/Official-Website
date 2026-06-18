@@ -1,38 +1,26 @@
 import type { Metadata } from "next";
-import { Syne, Outfit, Inter, JetBrains_Mono } from "next/font/google";
-import { CustomCursor } from "@/components/layout/CustomCursor";
+import { Space_Grotesk, Geist } from "next/font/google";
 import { BackgroundNetwork } from "@/components/layout/BackgroundNetwork";
 import { Loader } from "@/components/layout/Loader";
+import { Navbar } from "@/components/landing/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import "./globals.css";
 
-const syne = Syne({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
-const outfit = Outfit({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-geist",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "AWS Student Builder Group SRMIST",
-  description: "Official Website of the AWS Student Builder group SRMIST",
+  title: "AWS Student Builder Group at SRMIST",
+  description: "Official website of AWS Student Builder Group at SRMIST.",
 };
 
 export default function RootLayout({
@@ -43,11 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${syne.variable} ${outfit.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${geist.variable} antialiased`}
       >
         <Loader />
-        <CustomCursor />
         <BackgroundNetwork />
+        <Navbar />
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

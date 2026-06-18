@@ -1,61 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import Logo from "../../../public/logo-nobg.png"
+import Logo from "../../../public/logo.png"
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/#about", label: "About" },
-  { href: "/events", label: "Events" },
+  { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/team", label: "Team" },
+  { href: "/achievements", label: "Achievements" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState("");
   const pathname = usePathname();
-
-  useEffect(() => {
-    setActiveHash(window.location.hash);
-
-    const onHashChange = () => setActiveHash(window.location.hash);
-    window.addEventListener("hashchange", onHashChange);
-
-    // Track #about section visibility on the home page via scroll
-    const aboutEl = document.getElementById("about");
-    let observer: IntersectionObserver | null = null;
-    if (aboutEl) {
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveHash("#about");
-          } else if (window.scrollY < aboutEl.offsetTop - 100) {
-            setActiveHash("");
-          }
-        },
-        { rootMargin: "-100px 0px -60% 0px" }
-      );
-      observer.observe(aboutEl);
-    }
-
-    return () => {
-      window.removeEventListener("hashchange", onHashChange);
-      observer?.disconnect();
-    };
-  }, [pathname]);
 
   const isLinkActive = (href: string) => {
     if (href === "/") {
-      return pathname === "/" && activeHash !== "#about";
-    }
-    if (href === "/#about") {
-      return pathname === "/" && activeHash === "#about";
+      return pathname === "/";
     }
     return pathname === href || pathname.startsWith(href + "/");
   };
@@ -71,17 +38,17 @@ export function Navbar() {
       : "text-on-surface-variant hover:text-primary transition-colors duration-300";
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
-      <div className="max-w-container-max mx-auto px-margin-desktop py-3 grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
+    <nav className="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b-2 border-on-surface/10">
+      <div className="max-w-container-max mx-auto px-margin-desktop py-2 grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
         <Link
-          className="font-headline-md text-headline-md font-bold text-on-surface transition-all duration-300 hover:opacity-80 hover:scale-105 flex justify-start items-center"
+          className="font-headline-md text-sm font-bold text-on-surface transition-all duration-300 hover:opacity-80 flex justify-start items-center gap-2"
           href="/"
         >
-          <Image src={Logo} alt="AWSSBG SRMIST" className="h-16 w-16" />
-          <span className="hidden md:block">AWS SBG SRMIST</span>
+          <Image src={Logo} alt="AWS SBG at SRMIST" className="h-8 w-8" />
+          <span className="hidden md:block tracking-wide">AWS SBG at SRMIST</span>
         </Link>
 
-        <div className="hidden md:flex items-center justify-center gap-stack-md font-body-md text-body-md">
+        <div className="hidden md:flex items-center justify-center gap-6 font-label-md text-xs uppercase tracking-wide">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className={linkClass(link.href)}>
               {link.label}
@@ -90,14 +57,6 @@ export function Navbar() {
         </div>
 
         <div className="flex justify-end items-center">
-          <Link
-            href="https://www.meetup.com/awssbg-srmist/"
-            target="_blank"
-            className="hidden md:inline-block bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md transition-all active:scale-95 duration-200 hover:shadow-lg hover:-translate-y-1"
-          >
-            Join Community
-          </Link>
-
           <button
             aria-label="Toggle menu"
             onClick={() => setIsOpen((v) => !v)}
@@ -115,9 +74,9 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden border-t border-outline-variant/30 bg-surface/95 backdrop-blur-md"
+            className="md:hidden border-t-2 border-on-surface/10 bg-surface/95 backdrop-blur-md"
           >
-            <div className="flex flex-col px-margin-desktop py-4 gap-4 font-body-md text-body-md">
+            <div className="flex flex-col px-margin-desktop py-4 gap-4 font-label-md text-sm uppercase tracking-wide">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -128,14 +87,6 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="https://www.meetup.com/awssbg-srmist/"
-                target="_blank"
-                onClick={() => setIsOpen(false)}
-                className="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md text-center transition-all active:scale-95 duration-200"
-              >
-                Join Community
-              </Link>
             </div>
           </motion.div>
         )}

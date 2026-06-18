@@ -1,6 +1,6 @@
-# AWS Student Builder Group SRMIST Website
+# AWS Student Builder Group at SRMIST Website
 
-A modern and scalable **AWS Student Builder Group SRMIST Website** built with **TypeScript**, **Tailwind CSS v4**, and **shadcn/ui**. This website is designed for production-ready applications with a clean architecture, reusable components, and developer-friendly tooling.
+A modern and scalable **AWS Student Builder Group at SRMIST Website** built with **TypeScript**, **Tailwind CSS v4**, and **shadcn/ui**. This website is designed for production-ready applications with a clean architecture, reusable components, and developer-friendly tooling.
 
 ## ✨ Features
 

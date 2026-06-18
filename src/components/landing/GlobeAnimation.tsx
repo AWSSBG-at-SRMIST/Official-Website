@@ -48,10 +48,10 @@ export function GlobeAnimation() {
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
     const lightsGroup = new THREE.Group();
-    const blueLight = new THREE.PointLight(0x2563eb, 4, 12);
-    blueLight.position.set(4, 4, 4);
-    lightsGroup.add(blueLight);
-    const accentLight = new THREE.PointLight(0x60a5fa, 2, 8);
+    const violetLight = new THREE.PointLight(0xa855f7, 4, 12);
+    violetLight.position.set(4, 4, 4);
+    lightsGroup.add(violetLight);
+    const accentLight = new THREE.PointLight(0xd946ef, 2, 8);
     accentLight.position.set(-3, -2, 3);
     lightsGroup.add(accentLight);
     scene.add(lightsGroup);
@@ -59,12 +59,12 @@ export function GlobeAnimation() {
     // ── Globe Mesh ──────────────────────────────────────────────────────────
     const geo = new THREE.SphereGeometry(2.8, 64, 64);
     const mat = new THREE.MeshPhysicalMaterial({
-      color: 0x0f172a,
+      color: 0xc4b5fd,
       roughness: 0.1,
       metalness: 0.8,
       wireframe: true,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.3,
     });
     const globe = new THREE.Mesh(geo, mat);
     scene.add(globe);
@@ -72,9 +72,9 @@ export function GlobeAnimation() {
     // Inner glow sphere
     const coreGeo = new THREE.SphereGeometry(2.72, 32, 32);
     const coreMat = new THREE.MeshPhongMaterial({
-      color: 0x2563eb,
+      color: 0xa855f7,
       transparent: true,
-      opacity: 0.07,
+      opacity: 0.1,
       shininess: 120,
     });
     scene.add(new THREE.Mesh(coreGeo, coreMat));
@@ -82,7 +82,7 @@ export function GlobeAnimation() {
     // Orbiting dot nodes
     const nodesGroup = new THREE.Group();
     const nodeGeo = new THREE.SphereGeometry(0.025, 8, 8);
-    const nodeMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
+    const nodeMat = new THREE.MeshBasicMaterial({ color: 0xd946ef });
     for (let i = 0; i < 55; i++) {
       const node = new THREE.Mesh(nodeGeo, nodeMat);
       const phi = Math.acos(-1 + (2 * i) / 55);
