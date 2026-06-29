@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GlobeAnimation } from "./GlobeAnimation";
+import { BrainOverlay } from "./BrainOverlay";
 import Link from "next/link";
 
 const container = {
@@ -19,6 +20,7 @@ export function Hero() {
     <section className="relative max-w-container-max mx-auto px-margin-desktop mb-stack-lg min-h-[85vh] flex items-center">
       {/* Background Globe Animation */}
       <GlobeAnimation />
+      <BrainOverlay />
 
       {/* HUD corner brackets framing the section */}
       <div className="hidden lg:block absolute top-6 left-0 w-10 h-10 border-l-2 border-t-2 border-primary/40" />
@@ -42,7 +44,7 @@ export function Hero() {
 
           <motion.p
             variants={item}
-            className="font-body-lg text-body-lg text-on-surface-variant max-w-lg border-l-2 border-primary/40 pl-5"
+            className="text-label-md text-on-surface-variant max-w-lg border-l-2 border-primary/40 pl-5"
           >
             Empowering the next generation of software engineers, cloud
             architects, and tech founders at SRMIST. We are a community of

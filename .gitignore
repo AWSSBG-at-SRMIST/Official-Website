@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local data staging (filled in manually, never committed)
+honorary-members-template.csv

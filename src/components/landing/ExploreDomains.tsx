@@ -9,24 +9,24 @@ const domains = [
     index: "01",
     title: "Technical",
     description:
-      "Deep dive into serverless applications, full-stack development, modern DevOps, and scalable architecture.",
-    subDomains: ["Software Development", "AI & ML", "Cloud & DevOps"],
+      "Build real software, train ML models, and ship cloud infrastructure — the engineering core of everything SBG makes.",
+    subDomains: ["Software Development", "AI & Machine Learning", "Cloud & DevOps"],
   },
   {
     icon: Building2,
     index: "02",
-    title: "Corporate & Events",
+    title: "Corporate",
     description:
-      "Master enterprise cloud architecture, security compliance, project management, and system reliability.",
-    subDomains: ["Events", "PR & Marketing", "Sponsorship", "HR & Admin"],
+      "Run the club like an organization — planning events, managing partnerships, and growing the SBG brand.",
+    subDomains: ["Events & Operations", "PR & Marketing", "Sponsorship & Finance", "HR & Admin"],
   },
   {
     icon: Lightbulb,
     index: "03",
     title: "Creatives",
     description:
-      "Explore the boundary-pushing realms of Generative AI, UX Engineering, and Product Design thinking.",
-    subDomains: ["Digital Design", "Media"],
+      "Shape how SBG looks and sounds — design systems, visual identity, and every piece of content we publish.",
+    subDomains: ["Digital Design", "Media Production"],
   },
 ];
 
@@ -54,7 +54,7 @@ export function ExploreDomains() {
 
               <h3 className="font-headline-md text-headline-md mb-3">{domain.title}</h3>
 
-              <p className="text-body-md text-on-surface-variant mb-8">{domain.description}</p>
+              <p className="text-label-md text-on-surface-variant mb-8">{domain.description}</p>
 
               <div className="flex flex-wrap gap-2">
                 {domain.subDomains.map((sub) => (

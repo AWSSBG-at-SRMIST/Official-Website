@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+import builders from "../../../public/builders.png";
 
 const pillars = [
   {
@@ -29,7 +31,7 @@ export function AboutSection() {
           <h2 className="font-display font-bold text-[36px] sm:text-[48px] lg:text-[56px] leading-[1.02] tracking-tight">
             Built for Builders.
           </h2>
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+          <p className="text-label-md text-on-surface-variant max-w-lg">
             AWS Student Builder Group at SRMIST believes the best way to learn is by
             getting your hands dirty. We structure the community around
             real-world problems and the modern toolsets needed to solve them.
@@ -56,11 +58,11 @@ export function AboutSection() {
         >
           <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary" />
           <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="w-full h-full object-cover grayscale-[20%]"
-            alt="Students collaborating"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXvF_uTQ5ki9lBsOLBG7hjqIC-h8ccK0mJIqhx6Ma67UCWRM-SyjgeAkL3OyboGQdPjIb85T3dkp7e6IUdQ02ekNpUWlPA1k48bpciFoDE8A83jpJCPaILTeWzjMKdOgNTgeapBUx2JORxBnrXoKLECBMRRE_7Op3Ap42TXoz92E95OAobBBtuGdaRqnS7VtSU7g1gIoKd7hSdmbLSsXLfVcGgivIXjSQpIGORMaEunrbvlata6wvkJoisnIYY8iKO3VY4XEor47U"
+          <Image
+            src={builders}
+            alt="An illustrated wireframe builder character assembling a project"
+            fill
+            className="object-cover"
           />
         </motion.div>
       </div>

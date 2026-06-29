@@ -4,9 +4,14 @@ export function BuildTogetherCta() {
       <div className="relative border-2 border-primary/40 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary" />
         <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary" />
-        <h2 className="font-display font-bold text-[32px] sm:text-[44px] md:text-[56px] leading-[0.98] tracking-tight text-center md:text-left">
-          Let&rsquo;s Build <span className="text-primary">Together.</span>
-        </h2>
+        <div className="text-center md:text-left">
+          <h2 className="font-display font-bold text-[32px] sm:text-[44px] md:text-[56px] leading-[0.98] tracking-tight">
+            Become a <span className="text-primary">Builder.</span>
+          </h2>
+          <p className="text-label-md text-on-surface-variant mt-3 max-w-md">
+            Connect with the community, follow our meetups, and be ready when recruitment opens.
+          </p>
+        </div>
         <a
           href="https://www.meetup.com/awssbg-srmist/"
           target="_blank"

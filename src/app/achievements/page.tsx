@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BadgeCheck, Briefcase } from "lucide-react";
+import { Briefcase } from "lucide-react";
 import { Footer } from "@/components/landing/Footer";
-import { certifications, careerAchievements } from "@/data/achievementsData";
+import { careerAchievements } from "@/data/achievementsData";
 
 const TYPE_STYLE: Record<string, string> = {
   Internship: "border-primary/40 text-primary",
@@ -21,38 +21,10 @@ export default function AchievementsPage() {
             <h1 className="font-display text-[40px] sm:text-[56px] md:text-[72px] leading-[0.98] tracking-tight mb-4 text-on-surface font-bold">
               Wall of Achievements.
             </h1>
-            <p className="font-body-lg text-base sm:text-lg text-on-surface-variant leading-relaxed border-l-2 border-primary/40 pl-5">
-              Certifications earned, internships landed, and offers secured by builders
-              in this community — proof of what consistent practice compounds into.
+            <p className="text-label-md text-on-surface-variant leading-relaxed border-l-2 border-primary/40 pl-5">
+              Internships landed and offers secured by builders in this community —
+              proof of what consistent practice compounds into.
             </p>
-          </div>
-        </section>
-
-        {/* Certifications */}
-        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-16 md:mb-20">
-          <h2 className="font-label-sm text-sm uppercase tracking-[0.2em] text-primary mb-6 border-b-2 border-on-surface/10 pb-3">
-            AWS Certifications
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {certifications.map((cert, idx) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: idx * 0.04 }}
-                className="border-2 border-on-surface/10 hover:border-primary/40 transition-colors duration-300 p-6 bg-surface-container-lowest"
-              >
-                <BadgeCheck className="text-primary mb-4" size={28} />
-                <h3 className="font-headline-md text-base text-on-surface font-bold leading-snug mb-2">
-                  {cert.certTitle}
-                </h3>
-                <p className="text-sm text-on-surface-variant mb-1">{cert.memberName}</p>
-                <p className="text-xs uppercase tracking-wide text-on-surface-variant/60">
-                  {cert.issuer} &middot; {cert.date}
-                </p>
-              </motion.div>
-            ))}
           </div>
         </section>
 
@@ -84,32 +56,6 @@ export default function AchievementsPage() {
                 <p className="text-xs uppercase tracking-wide text-on-surface-variant/60">{item.date}</p>
               </motion.div>
             ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-16 md:mb-24">
-          <div className="relative border-2 border-primary/40 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary" />
-            <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary" />
-            <div className="relative z-10 max-w-xl text-center md:text-left">
-              <h2 className="font-display text-2xl sm:text-3xl md:text-[40px] leading-tight tracking-tight mb-4 text-on-surface font-bold">
-                Landed something worth sharing?
-              </h2>
-              <p className="text-body-lg text-sm sm:text-base text-on-surface-variant">
-                Let us know about your certification, internship, or offer — we want this wall to stay current.
-              </p>
-            </div>
-            <div className="relative z-10 shrink-0">
-              <a
-                className="inline-block bg-primary text-on-primary px-8 py-4 font-bold uppercase tracking-wide hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-95 duration-200 cursor-pointer"
-                href="https://www.meetup.com/awssbg-srmist/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Tell Us
-              </a>
-            </div>
           </div>
         </section>
       </main>

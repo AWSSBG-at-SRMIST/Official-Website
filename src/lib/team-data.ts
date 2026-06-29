@@ -8,10 +8,7 @@ export type MemberRole =
   | "DIRECTOR"
   | "MANAGER"
   | "ASSOCIATE"
-  | "BUILDER"
-  | "FACULTY_MENTOR"
-  | "INDUSTRIAL_MENTOR"
-  | "FOUNDING_TEAM";
+  | "BUILDER";
 
 export interface RawMember {
   memberId: string;

@@ -1,4 +1,5 @@
 import { RawMember, MemberRole } from "./team-data";
+import { HonoraryMember, HonoraryTag } from "./honorary-members";
 import { DomainStructure, SubdomainGroup, TeamData, TeamLevel, TeamMember } from "@/types/team";
 
 const LEVEL_BY_ROLE: Record<MemberRole, TeamLevel> = {
@@ -8,9 +9,6 @@ const LEVEL_BY_ROLE: Record<MemberRole, TeamLevel> = {
   MANAGER: "manager",
   ASSOCIATE: "associate",
   BUILDER: "builder",
-  FACULTY_MENTOR: "mentor",
-  INDUSTRIAL_MENTOR: "mentor",
-  FOUNDING_TEAM: "founding",
 };
 
 // Fixed org structure: each domain has exactly one subdomain list, and each
@@ -18,9 +16,9 @@ const LEVEL_BY_ROLE: Record<MemberRole, TeamLevel> = {
 // column order so every domain tab renders the same shape regardless of
 // which slots are currently filled in the live roster.
 const SUBDOMAIN_ORDER: Record<string, string[]> = {
-  Technical: ["Software Development", "AI & ML", "Cloud & DevOps"],
-  Corporate: ["Events", "PR & Marketing", "Sponsorship", "HR & Admin"],
-  Creatives: ["Digital Design", "Media"],
+  Technical: ["Software Development", "AI & Machine Learning", "Cloud & DevOps"],
+  Corporate: ["Events & Operations", "PR & Marketing", "Sponsorship & Finance", "HR & Admin"],
+  Creatives: ["Digital Design", "Media Production"],
 };
 
 function computeInitials(name: string): string {
@@ -45,12 +43,6 @@ function humanizeRole(member: RawMember): string {
       return subdomain ? `${subdomain} Associate` : domain ? `${domain} Associate` : "Associate";
     case "BUILDER":
       return subdomain ? `${subdomain} Builder` : domain ? `${domain} Builder` : "Builder";
-    case "FACULTY_MENTOR":
-      return "Faculty Mentor";
-    case "INDUSTRIAL_MENTOR":
-      return "Industrial Mentor";
-    case "FOUNDING_TEAM":
-      return "Founding Member";
     default:
       return role;
   }
@@ -114,7 +106,37 @@ function buildDomainStructure(domain: string, members: RawMember[]): DomainStruc
   };
 }
 
-export function buildTeamTree(members: RawMember[]): TeamData {
+const HONORARY_ROLE_LABEL: Record<HonoraryTag, string> = {
+  FACULTY_MENTOR: "Faculty Mentor",
+  INDUSTRIAL_MENTOR: "Industrial Mentor",
+  FOUNDING_MEMBER: "Founding Member",
+};
+
+const HONORARY_LEVEL: Record<HonoraryTag, TeamLevel> = {
+  FACULTY_MENTOR: "mentor",
+  INDUSTRIAL_MENTOR: "mentor",
+  FOUNDING_MEMBER: "founding",
+};
+
+// Faculty/Industry mentors and founding members never log in to the
+// dashboard, so they live in sbg-honorary-members (managed from the Internal
+// Dashboard) rather than sbg-members — converted into the same TeamMember
+// shape so the existing roster UI doesn't need to know the difference.
+function toHonoraryTeamMember(member: HonoraryMember): TeamMember {
+  return {
+    id: member.id,
+    name: member.name,
+    role: HONORARY_ROLE_LABEL[member.tag],
+    image: member.photoUrl || null,
+    imageAlt: member.name,
+    initials: computeInitials(member.name),
+    linkedinUrl: member.linkedin || undefined,
+    description: member.description || undefined,
+    level: HONORARY_LEVEL[member.tag],
+  };
+}
+
+export function buildTeamTree(members: RawMember[], honoraryMembers: HonoraryMember[] = []): TeamData {
   const leader = members.find((m) => m.role === "SBG_LEADER");
   const secretary = members.find((m) => m.role === "SECRETARY");
 
@@ -124,8 +146,8 @@ export function buildTeamTree(members: RawMember[]): TeamData {
     technical: buildDomainStructure("Technical", members),
     corporate: buildDomainStructure("Corporate", members),
     creatives: buildDomainStructure("Creatives", members),
-    facultyMentors: members.filter((m) => m.role === "FACULTY_MENTOR").map(toTeamMember),
-    industrialMentors: members.filter((m) => m.role === "INDUSTRIAL_MENTOR").map(toTeamMember),
-    foundingTeam: members.filter((m) => m.role === "FOUNDING_TEAM").map(toTeamMember),
+    facultyMentors: honoraryMembers.filter((m) => m.tag === "FACULTY_MENTOR").map(toHonoraryTeamMember),
+    industrialMentors: honoraryMembers.filter((m) => m.tag === "INDUSTRIAL_MENTOR").map(toHonoraryTeamMember),
+    foundingTeam: honoraryMembers.filter((m) => m.tag === "FOUNDING_MEMBER").map(toHonoraryTeamMember),
   };
 }

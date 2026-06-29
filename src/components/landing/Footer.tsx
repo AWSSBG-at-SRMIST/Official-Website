@@ -1,10 +1,12 @@
-import { Github, Heart, Instagram, Linkedin, Mail, Users } from "lucide-react";
+import { Github, Heart, Instagram, Linkedin, Mail } from "lucide-react";
+import { SiMeetup, SiWhatsapp } from "react-icons/si";
 
 const SOCIALS = [
   { href: "https://www.instagram.com/awssbg.srmist/", label: "Instagram", icon: Instagram },
   { href: "https://in.linkedin.com/company/awssbg-srmist", label: "LinkedIn", icon: Linkedin },
-  { href: "https://www.meetup.com/awssbg-srmist/", label: "Meetup", icon: Users },
-  { href: "https://github.com/awssbg-srmist", label: "GitHub", icon: Github },
+  { href: "https://www.meetup.com/awssbg-srmist/", label: "Meetup", icon: SiMeetup },
+  { href: "https://github.com/AWSSBG-at-SRMIST", label: "GitHub", icon: Github },
+  { href: "https://chat.whatsapp.com/Ckmq15FNNjVIGftTJhIlgZ", label: "WhatsApp Community", icon: SiWhatsapp },
 ];
 
 const CONTACTS = [
@@ -50,7 +52,7 @@ export function Footer() {
             <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary z-10" />
             <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary z-10" />
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.3691771246167!2d80.03442323922259!3d12.81940405530423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f76c4db87a47%3A0x341fa471f8027d68!2sSRM%20University%2C%20Kattankulathur%2C%20Tamil%20Nadu%20603203!5e0!3m2!1sen!2sin!4v1781783778800!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3190.6140405386013!2d80.04169612823796!3d12.823465079563613!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f76d4cecae21%3A0x4ffbf1222ec00611!2sS.R.M%20UNIVERSITY%20-K.T.R%20Campus!5e0!3m2!1sen!2sin!4v1781811459471!5m2!1sen!2sin"
               className="w-full h-full min-h-[220px] grayscale-[15%] contrast-[1.1]"
               style={{ border: 0 }}
               loading="lazy"

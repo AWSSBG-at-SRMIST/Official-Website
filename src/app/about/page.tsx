@@ -89,7 +89,7 @@ export default function AboutPage() {
               Est. 2025
             </span>
           </div>
-          <p className="text-on-surface-variant leading-relaxed text-sm sm:text-base">
+          <p className="text-label-md text-on-surface-variant leading-relaxed">
             SRMIST has clubs for AI, robotics, IoT, and general software &mdash; but
             none built specifically around the cloud, where most of that software
             actually has to run. AWS Student Builder Group at SRMIST exists to close
@@ -134,7 +134,7 @@ export default function AboutPage() {
           <h2 className="font-label-sm text-sm uppercase tracking-[0.2em] text-primary mb-6 border-b-2 border-on-surface/10 pb-3">
             Why AWS Student Builder Group at SRMIST?
           </h2>
-          <p className="text-on-surface-variant leading-relaxed text-sm sm:text-base mb-8">
+          <p className="text-label-md text-on-surface-variant leading-relaxed mb-8">
             Most existing technical clubs at SRMIST concentrate on general software
             development, AI, robotics, or IoT. Cloud computing, when covered, is
             usually treated as a supporting tool rather than a core discipline. This
@@ -174,7 +174,7 @@ export default function AboutPage() {
               <h2 className="font-display text-2xl sm:text-3xl md:text-[40px] leading-tight tracking-tight mb-4 text-on-surface font-bold">
                 A center of excellence for cloud computing.
               </h2>
-              <p className="text-body-lg text-sm sm:text-base text-on-surface-variant">
+              <p className="text-label-md text-on-surface-variant">
                 AWS Student Builder Group at SRMIST combines hands-on practice,
                 industry alignment, and community engagement to prepare students for
                 modern cloud-driven careers. Open to every department, every year

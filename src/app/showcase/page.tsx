@@ -1,0 +1,325 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Rocket, Star, ArrowRight, Zap, Users } from 'lucide-react';
+import { Footer } from "@/components/landing/Footer";
+import { projectsData, projectCategories } from "@/data/projectsData";
+
+function initialsOf(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function ContributorBadge({ name }: { name: string }) {
+  return (
+    <div
+      title={name}
+      className="w-8 h-8 border-2 border-surface-container-lowest bg-primary/15 text-primary text-[10px] font-bold flex items-center justify-center shrink-0"
+    >
+      {initialsOf(name)}
+    </div>
+  );
+}
+
+export default function ShowcasePage() {
+  const [activeCategory, setActiveCategory] = useState('All Projects');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const filteredProjects = projectsData.filter(project => {
+    if (activeCategory === 'All Projects') return true;
+    return project.categories.includes(activeCategory);
+  });
+
+  return (
+    <>
+      <main className="pt-24 pb-stack-lg min-h-screen">
+        {/* Hero Section */}
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-10 md:mb-16">
+          <div className="max-w-3xl">
+            <h1 className="font-display text-[40px] sm:text-[56px] md:text-[72px] leading-[0.98] tracking-tight mb-4 text-on-surface font-bold">
+              Built by our Community.
+            </h1>
+            <p className="text-label-md text-on-surface-variant leading-relaxed border-l-2 border-primary/40 pl-5">
+              A gallery of high-impact products, open-source contributions, and technical experiments developed by student builders at SRMIST.
+            </p>
+          </div>
+        </section>
+
+        {/* Filters & Categories */}
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-10 md:mb-12 py-4 border-b-2 border-on-surface/10">
+          <div className="flex items-center w-full overflow-x-auto no-scrollbar scroll-smooth">
+            <span className="font-label-md text-on-surface-variant mr-4 whitespace-nowrap shrink-0 uppercase tracking-wide text-xs">Filter by:</span>
+            <div className="flex gap-2.5">
+              {projectCategories.map(cat => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-5 py-2.5 border-2 text-sm font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'bg-primary text-on-primary border-primary'
+                        : 'border-on-surface/15 bg-transparent text-on-surface hover:border-primary/50'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Project Grid */}
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-16">
+          {isMounted && (
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredProjects.map((project, idx) => {
+                  if (project.featured) {
+                    return (
+                      <motion.article
+                        key={project.id}
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.3, delay: idx * 0.05 }}
+                        className="lg:col-span-8 group bg-surface-container-lowest border-2 border-on-surface/10 hover:border-primary/40 transition-colors duration-300 flex flex-col md:flex-row"
+                      >
+                        {/* Left Half: Image */}
+                        <div className="md:w-1/2 relative overflow-hidden h-60 md:h-auto min-h-[220px]">
+                          <img
+                            alt={project.imageAlt}
+                            className="w-full h-full object-cover grayscale-[15%] transition-transform duration-500 group-hover:scale-105"
+                            src={project.image}
+                          />
+                          <div className="absolute top-4 left-4">
+                            <span className="bg-primary text-on-primary text-[10px] font-bold uppercase tracking-widest px-2.5 py-1.5">
+                              Featured
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Right Half: Details */}
+                        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between">
+                          <div>
+                            <div className="flex justify-between items-start mb-4 gap-2">
+                              <h3 className="font-headline-md text-xl md:text-2xl text-on-surface font-bold leading-snug">
+                                {project.title}
+                              </h3>
+                              <span className="border border-primary/40 text-primary font-semibold text-xs px-3 py-1 shrink-0">
+                                {project.statusLabel || project.status}
+                              </span>
+                            </div>
+                            <p className="text-on-surface-variant mb-6 leading-relaxed text-sm">
+                              {project.description}
+                            </p>
+                            <div className="flex flex-wrap gap-2 mb-6">
+                              {project.tags.map(tag => (
+                                <span key={tag} className="border border-on-surface/15 text-on-surface-variant text-xs font-semibold px-2.5 py-1">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-4 border-t border-on-surface/10">
+                            <div className="flex -space-x-2">
+                              {project.contributors.map((c, i) => (
+                                <ContributorBadge key={i} name={c.name} />
+                              ))}
+                            </div>
+                            <div className="flex gap-4">
+                              <a
+                                className="flex items-center gap-1.5 text-on-surface-variant hover:text-primary font-semibold text-xs transition-colors"
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Github className="w-4 h-4" />
+                                <span>GitHub</span>
+                              </a>
+                              {project.demoUrl && (
+                                <a
+                                  className="flex items-center gap-1.5 text-primary hover:opacity-80 font-bold text-xs transition-opacity"
+                                  href={project.demoUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                  <span>Demo</span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.article>
+                    );
+                  }
+
+                  return (
+                    <motion.article
+                      key={project.id}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3, delay: idx * 0.05 }}
+                      className="lg:col-span-4 bg-surface-container-lowest border-2 border-on-surface/10 hover:border-primary/40 transition-colors duration-300 group flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="h-48 relative overflow-hidden">
+                          <img
+                            alt={project.imageAlt}
+                            className="w-full h-full object-cover grayscale-[15%] transition-transform duration-500 group-hover:scale-105"
+                            src={project.image}
+                          />
+                          <div className="absolute bottom-3 right-3">
+                            <span className="bg-surface-container-lowest border border-on-surface/10 text-on-surface font-bold text-xs px-2.5 py-1 flex items-center gap-1">
+                              {project.stars !== undefined && (
+                                <>
+                                  <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                                  <span>{project.stars}</span>
+                                </>
+                              )}
+                              {project.status === 'Active' && (
+                                <>
+                                  <Zap className="w-3.5 h-3.5 text-primary fill-primary animate-pulse" />
+                                  <span>Active</span>
+                                </>
+                              )}
+                              {project.contributorsCount !== undefined && (
+                                <>
+                                  <Users className="w-3.5 h-3.5 text-primary" />
+                                  <span>{project.contributorsCount} Contributors</span>
+                                </>
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <div className="flex justify-between items-start mb-3 gap-2">
+                            <h3 className="font-headline-md text-lg text-on-surface font-bold leading-snug">
+                              {project.title}
+                            </h3>
+                            <span className="text-on-surface-variant text-[11px] font-semibold border border-on-surface/15 px-2.5 py-1 shrink-0">
+                              {project.statusLabel || project.status}
+                            </span>
+                          </div>
+                          <p className="text-on-surface-variant mb-6 text-sm leading-relaxed line-clamp-2">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {project.tags.map(tag => (
+                              <span key={tag} className="border border-on-surface/15 text-on-surface-variant text-xs font-semibold px-2.5 py-1">
+                                  {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6 pt-0 flex items-center justify-between border-t border-on-surface/10 mt-auto">
+                        <div className="flex items-center gap-2">
+                          {project.contributors.length > 0 && (
+                            <>
+                              <ContributorBadge name={project.contributors[0].name} />
+                              <span className="text-xs text-on-surface-variant">by {project.contributors[0].name}</span>
+                            </>
+                          )}
+                        </div>
+                        <a
+                          className="text-on-surface-variant hover:text-primary transition-colors flex items-center"
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </a>
+                      </div>
+                    </motion.article>
+                  );
+                })}
+
+                {/* Submit Project CTA Card (Always visible at the correct position) */}
+                <motion.div
+                  layout
+                  className="lg:col-span-4 bg-primary text-on-primary p-8 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 flex flex-col justify-center items-center text-center relative overflow-hidden"
+                >
+                  <Rocket className="w-12 h-12 mb-4 text-white" />
+                  <h4 className="font-headline-md text-xl text-white font-bold mb-2">24+ Active Projects</h4>
+                  <p className="opacity-80 text-sm mb-6 max-w-xs text-white/90">
+                    Current cycle of student-led innovation across all technical domains.
+                  </p>
+                  <button className="bg-white text-primary font-bold px-6 py-3 uppercase tracking-wide text-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer">
+                    Submit a Project
+                  </button>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </section>
+
+        {/* Stats Section */}
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop my-12 md:my-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 border-2 border-on-surface/10">
+            <div className="text-center py-10 px-4 border-r border-b md:border-b-0 border-on-surface/10">
+              <div className="font-display text-3xl sm:text-4xl md:text-[40px] text-primary font-bold mb-2">12.4k</div>
+              <div className="font-label-md text-xs sm:text-sm text-on-surface-variant uppercase tracking-widest font-semibold">Commits This Year</div>
+            </div>
+            <div className="text-center py-10 px-4 border-b md:border-b-0 md:border-r border-on-surface/10">
+              <div className="font-display text-3xl sm:text-4xl md:text-[40px] text-primary font-bold mb-2">15</div>
+              <div className="font-label-md text-xs sm:text-sm text-on-surface-variant uppercase tracking-widest font-semibold">Open Source Repos</div>
+            </div>
+            <div className="text-center py-10 px-4 border-r border-on-surface/10">
+              <div className="font-display text-3xl sm:text-4xl md:text-[40px] text-primary font-bold mb-2">850+</div>
+              <div className="font-label-md text-xs sm:text-sm text-on-surface-variant uppercase tracking-widest font-semibold">Students Reached</div>
+            </div>
+            <div className="text-center py-10 px-4">
+              <div className="font-display text-3xl sm:text-4xl md:text-[40px] text-primary font-bold mb-2">5</div>
+              <div className="font-label-md text-xs sm:text-sm text-on-surface-variant uppercase tracking-widest font-semibold">Global Competitions</div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-16 md:mb-24">
+          <div className="relative border-2 border-primary/40 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary" />
+            <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary" />
+            <div className="relative z-10 max-w-xl text-center md:text-left">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-[40px] leading-tight tracking-tight mb-4 text-on-surface font-bold">
+                Have a project in mind?
+              </h2>
+              <p className="text-label-md text-on-surface-variant">
+                We provide the resources, mentorship, and cloud credits to help you scale your idea from a prototype to a product.
+              </p>
+            </div>
+            <div className="relative z-10 shrink-0">
+              <a
+                className="inline-block bg-primary text-on-primary px-8 py-4 font-bold uppercase tracking-wide hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-95 duration-200 cursor-pointer"
+                href="https://www.meetup.com/awssbg-srmist/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Started Today
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

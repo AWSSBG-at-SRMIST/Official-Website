@@ -255,6 +255,9 @@ function RosterCard({ member, index }: { member: TeamMember; index: string }) {
         <span className="font-display text-[10px] text-primary tracking-[0.2em]">{index}</span>
         <p className="font-bold text-base sm:text-lg text-on-surface truncate">{member.name}</p>
         <p className="text-xs text-on-surface-variant/60 uppercase tracking-wide mb-1.5">{member.role}</p>
+        {member.description && (
+          <p className="text-sm text-on-surface-variant mb-1.5 line-clamp-2">{member.description}</p>
+        )}
         <LinkRow member={member} />
       </div>
     </div>
@@ -324,7 +327,7 @@ export function TeamPageClient({ data }: { data: TeamData }) {
               <h1 className="font-display text-[40px] sm:text-[64px] md:text-[80px] mb-4 tracking-tight leading-[0.95] font-bold text-on-surface">
                 The Builders.
               </h1>
-              <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-sm sm:text-base">
+              <p className="text-label-md text-on-surface-variant max-w-2xl">
                 The minds driving cloud innovation at SRMIST. We are a collective of
                 builders, engineers, and designers pushing the boundaries of what&rsquo;s
                 possible on AWS.

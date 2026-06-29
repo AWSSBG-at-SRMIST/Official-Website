@@ -3,7 +3,7 @@
 import { Hero } from "@/components/landing/Hero";
 import { CommunityMarquee } from "@/components/landing/CommunityMarquee";
 import { AboutSection } from "@/components/landing/AboutSection";
-import { ProjectShowcase } from "@/components/landing/ProjectShowcase";
+import { ProjectsTeaser } from "@/components/landing/ProjectsTeaser";
 import { ExploreDomains } from "@/components/landing/ExploreDomains";
 import { BuildTogetherCta } from "@/components/landing/BuildTogetherCta";
 import { Footer } from "@/components/landing/Footer";
@@ -16,7 +16,7 @@ export default function Home() {
         <CommunityMarquee />
         <AboutSection />
         <ExploreDomains />
-        <ProjectShowcase />
+        <ProjectsTeaser />
       </main>
       <BuildTogetherCta />
       <Footer />

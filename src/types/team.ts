@@ -15,6 +15,7 @@ export interface TeamMember {
   builderUrl?: string;
   portfolioUrl?: string;
   level?: TeamLevel;
+  description?: string;
 }
 
 export interface SubdomainGroup {
