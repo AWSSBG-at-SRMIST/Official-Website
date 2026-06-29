@@ -60,7 +60,7 @@ export function AboutSection() {
           <CornerBrackets />
           <Image
             src={builders}
-            alt="An illustrated wireframe builder character assembling a project"
+            alt="AWS Student Builder Group at SRMIST members collaborating on cloud computing projects"
             fill
             className="object-cover"
           />

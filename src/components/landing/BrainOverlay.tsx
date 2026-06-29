@@ -51,8 +51,8 @@ function Neuron({ angle, length, delay }: { angle: number; length: number; delay
 // that same translated box.
 export function BrainOverlay() {
   return (
-    <div className="absolute inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-      <div className="relative w-full h-full transform translate-x-0 lg:translate-x-1/4">
+    <div className="absolute top-0 left-0 right-0 h-[260px] sm:h-[300px] pointer-events-none -z-10 overflow-hidden lg:inset-0 lg:h-auto">
+      <div className="relative w-full h-full lg:translate-x-1/4">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <svg
             viewBox="-170 -170 340 340"

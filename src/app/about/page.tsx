@@ -4,8 +4,67 @@ import { Footer } from "@/components/landing/Footer";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
 
 export const metadata: Metadata = {
-  title: "About | AWS SBG at SRMIST",
-  description: "Learn about the AWS Student Builder Group at SRMIST — our mission, vision, and why we exist.",
+  title: "About AWS Student Builder Group at SRMIST | Cloud Community SRM KTR",
+  description:
+    "Learn about AWS Student Builder Group (AWS SBG) at SRMIST — the official cloud computing student community at SRM Kattankulathur. Our mission, vision, and why we exist.",
+  alternates: { canonical: "https://awssbg-srmist.in/about" },
+  openGraph: { url: "https://awssbg-srmist.in/about" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://awssbg-srmist.in" },
+    { "@type": "ListItem", position: 2, name: "About", item: "https://awssbg-srmist.in/about" },
+  ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is AWS Student Builder Group at SRMIST?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "AWS Student Builder Group (AWS SBG) at SRMIST is the official student-led cloud computing community at SRM Institute of Science and Technology, Kattankulathur. It is the first club at SRMIST fully dedicated to cloud computing on Amazon Web Services, covering everything from cloud fundamentals to advanced architecture, infrastructure as code, and cloud security.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How can I join AWS Student Builder Group at SRMIST?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You can join AWS Student Builder Group at SRMIST by applying during our open recruitment periods. Visit the Recruitments page on our website to apply. AWS SBG is open to students from every department and every year — no prior cloud experience is required.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need prior cloud experience to join AWS SBG at SRMIST?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. AWS Student Builder Group at SRMIST is open to every department and every year — no prior cloud experience required. We provide structured learning pathways from cloud fundamentals all the way to advanced topics like container orchestration, serverless architecture, and cloud security.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does AWS Student Builder Group at SRMIST do?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "AWS SBG at SRMIST runs hands-on workshops, real-world project teams, AWS certification prep sessions, and connects students with the broader AWS Community Builders and AWS Heroes network. We focus on practical cloud skills, production-grade builds, and preparing students for cloud, DevOps, and platform engineering careers.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where is AWS Student Builder Group at SRMIST located?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "AWS Student Builder Group at SRMIST operates under the Department of Computing Technologies, School of Computing, SRM Institute of Science and Technology, Kattankulathur, Tamil Nadu, India (SRM KTR).",
+      },
+    },
+  ],
 };
 
 const missionItems = [
@@ -75,6 +134,14 @@ const whyItems = [
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <main className="pt-24 pb-stack-lg min-h-screen">
         {/* Hero */}
         <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-12 md:mb-16">

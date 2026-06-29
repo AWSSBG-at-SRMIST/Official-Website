@@ -6,6 +6,7 @@ import { CornerBrackets } from "@/components/ui/CornerBrackets";
 export const metadata: Metadata = {
   title: "404 — Page Not Found",
   description: "This page does not exist.",
+  robots: { index: false, follow: false },
 };
 
 export default function NotFound() {

@@ -4,6 +4,7 @@ import { ComingSoonPage } from "@/components/layout/ComingSoonPage";
 export const metadata: Metadata = {
   title: "Events | AWS SBG at SRMIST",
   description: "Upcoming workshops, hackathons, and events from the AWS Student Builder Group at SRMIST.",
+  robots: { index: false, follow: false },
 };
 
 export default function EventsPage() {

@@ -10,7 +10,7 @@ export function BuildTogetherCta() {
             Become a <span className="text-primary">Builder.</span>
           </h2>
           <p className="text-label-md text-on-surface-variant mt-3 max-w-md">
-            Connect with the community, follow our meetups, and be ready when recruitment opens.
+            Connect with the community, follow our meetups, and be ready when recruitments open.
           </p>
         </div>
         <a

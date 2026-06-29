@@ -46,7 +46,7 @@ export function Navbar() {
           className="font-headline-md text-sm font-bold text-on-surface transition-all duration-300 hover:opacity-80 flex justify-start items-center gap-2"
           href="/"
         >
-          <Image src={Logo} alt="AWS SBG at SRMIST" className="h-8 w-8" />
+          <Image src={Logo} alt="AWS Student Builder Group at SRMIST logo" className="h-8 w-8" />
           <span className="hidden md:block tracking-wide">AWS SBG at SRMIST</span>
         </Link>
 
@@ -65,10 +65,10 @@ export function Navbar() {
 
         <div className="flex justify-end items-center gap-3">
           <Link
-            href="/recruitment"
+            href="/recruitments"
             className="hidden md:inline-block text-xs uppercase tracking-wide font-bold px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300"
           >
-            Recruitment
+            Recruitments
           </Link>
           <button
             aria-label="Toggle menu"
@@ -101,11 +101,11 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/recruitment"
+                href="/recruitments"
                 onClick={() => setIsOpen(false)}
                 className="text-primary font-bold block py-3"
               >
-                Recruitment
+                Recruitments
               </Link>
             </div>
           </motion.div>

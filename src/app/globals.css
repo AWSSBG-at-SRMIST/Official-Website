@@ -222,6 +222,12 @@ html {
   animation: marquee 30s linear infinite;
 }
 
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 15s;
+  }
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }

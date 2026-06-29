@@ -19,7 +19,7 @@ const item = {
 
 export function Hero() {
   return (
-    <section className="relative max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-stack-lg min-h-[85vh] flex items-center">
+    <section className="relative max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-stack-lg lg:min-h-[85vh] lg:flex lg:items-center">
       {/* Background Globe Animation */}
       <GlobeAnimation />
       <BrainOverlay />
@@ -35,6 +35,13 @@ export function Hero() {
         animate="visible"
       >
         <div className="lg:col-span-8 xl:col-span-7 space-y-8 relative z-20">
+          <motion.p
+            variants={item}
+            className="text-xs uppercase tracking-[0.2em] text-primary"
+          >
+            AWS Student Builder Group at SRMIST — Cloud Computing Community, SRM KTR
+          </motion.p>
+
           <motion.h1
             variants={item}
             className="font-display font-bold leading-[0.95] tracking-tight text-[56px] sm:text-[80px] lg:text-[104px] xl:text-[124px]"
@@ -48,9 +55,10 @@ export function Hero() {
             variants={item}
             className="text-label-md text-on-surface-variant max-w-lg border-l-2 border-primary/40 pl-5"
           >
-            Empowering the next generation of software engineers, cloud
-            architects, and tech founders at SRMIST. We are a community of
-            dedicated builders focused on practical excellence.
+            AWS Student Builder Group (AWS SBG) at SRMIST, Kattankulathur is
+            the official student-led cloud computing community at SRM. Build
+            real AWS projects, get certified, and launch your cloud engineering
+            career.
           </motion.p>
 
           <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">
