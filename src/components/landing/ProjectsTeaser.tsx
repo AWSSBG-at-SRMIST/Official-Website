@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export function ProjectsTeaser() {
   return (
-    <section className="py-stack-lg max-w-container-max mx-auto px-margin-desktop border-t-2 border-on-surface/10">
+    <section className="py-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop border-t-2 border-on-surface/10">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}

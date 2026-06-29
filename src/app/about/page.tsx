@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { Cloud, Compass, Rocket, Globe2 } from "lucide-react";
 import { Footer } from "@/components/landing/Footer";
+import { CornerBrackets } from "@/components/ui/CornerBrackets";
+
+export const metadata: Metadata = {
+  title: "About | AWS SBG at SRMIST",
+  description: "Learn about the AWS Student Builder Group at SRMIST — our mission, vision, and why we exist.",
+};
 
 const missionItems = [
   {
@@ -168,8 +175,7 @@ export default function AboutPage() {
         {/* Strategic Outlook */}
         <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-12">
           <div className="relative border-2 border-primary/40 p-8 sm:p-12 text-center md:text-left">
-            <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-l-2 border-t-2 border-primary" />
-            <div className="absolute -bottom-2.5 -right-2.5 w-5 h-5 border-r-2 border-b-2 border-primary" />
+            <CornerBrackets />
             <div className="relative z-10 max-w-2xl mx-auto md:mx-0">
               <h2 className="font-display text-2xl sm:text-3xl md:text-[40px] leading-tight tracking-tight mb-4 text-on-surface font-bold">
                 A center of excellence for cloud computing.

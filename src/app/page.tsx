@@ -1,5 +1,3 @@
-"use client";
-
 import { Hero } from "@/components/landing/Hero";
 import { CommunityMarquee } from "@/components/landing/CommunityMarquee";
 import { AboutSection } from "@/components/landing/AboutSection";

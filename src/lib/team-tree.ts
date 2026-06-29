@@ -1,3 +1,4 @@
+import "server-only";
 import { RawMember, MemberRole } from "./team-data";
 import { HonoraryMember, HonoraryTag } from "./honorary-members";
 import { DomainStructure, SubdomainGroup, TeamData, TeamLevel, TeamMember } from "@/types/team";
@@ -21,12 +22,7 @@ const SUBDOMAIN_ORDER: Record<string, string[]> = {
   Creatives: ["Digital Design", "Media Production"],
 };
 
-function computeInitials(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
+import { initialsOf } from "./utils";
 
 function humanizeRole(member: RawMember): string {
   const { role, domain, subdomain } = member;
@@ -58,7 +54,7 @@ function toTeamMember(member: RawMember): TeamMember {
     // existing initials-fallback renders whenever image is falsy.
     image: null,
     imageAlt: member.name,
-    initials: computeInitials(member.name),
+    initials: initialsOf(member.name),
     domains: member.subdomain ? [member.subdomain] : member.domain ? [member.domain] : [],
     linkedinUrl: member.linkedin || undefined,
     githubUrl: member.github || undefined,
@@ -110,12 +106,14 @@ const HONORARY_ROLE_LABEL: Record<HonoraryTag, string> = {
   FACULTY_MENTOR: "Faculty Mentor",
   INDUSTRIAL_MENTOR: "Industrial Mentor",
   FOUNDING_MEMBER: "Founding Member",
+  ADVISORY: "Advisory Committee",
 };
 
 const HONORARY_LEVEL: Record<HonoraryTag, TeamLevel> = {
   FACULTY_MENTOR: "mentor",
   INDUSTRIAL_MENTOR: "mentor",
   FOUNDING_MEMBER: "founding",
+  ADVISORY: "mentor",
 };
 
 // Faculty/Industry mentors and founding members never log in to the
@@ -129,7 +127,7 @@ function toHonoraryTeamMember(member: HonoraryMember): TeamMember {
     role: HONORARY_ROLE_LABEL[member.tag],
     image: member.photoUrl || null,
     imageAlt: member.name,
-    initials: computeInitials(member.name),
+    initials: initialsOf(member.name),
     linkedinUrl: member.linkedin || undefined,
     description: member.description || undefined,
     level: HONORARY_LEVEL[member.tag],
@@ -146,8 +144,21 @@ export function buildTeamTree(members: RawMember[], honoraryMembers: HonoraryMem
     technical: buildDomainStructure("Technical", members),
     corporate: buildDomainStructure("Corporate", members),
     creatives: buildDomainStructure("Creatives", members),
-    facultyMentors: honoraryMembers.filter((m) => m.tag === "FACULTY_MENTOR").map(toHonoraryTeamMember),
-    industrialMentors: honoraryMembers.filter((m) => m.tag === "INDUSTRIAL_MENTOR").map(toHonoraryTeamMember),
-    foundingTeam: honoraryMembers.filter((m) => m.tag === "FOUNDING_MEMBER").map(toHonoraryTeamMember),
+    facultyMentors: honoraryMembers
+      .filter((m) => m.tag === "FACULTY_MENTOR")
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+      .map(toHonoraryTeamMember),
+    industrialMentors: honoraryMembers
+      .filter((m) => m.tag === "INDUSTRIAL_MENTOR")
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+      .map(toHonoraryTeamMember),
+    advisoryCommittee: honoraryMembers
+      .filter((m) => m.tag === "ADVISORY")
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+      .map(toHonoraryTeamMember),
+    foundingTeam: honoraryMembers
+      .filter((m) => m.tag === "FOUNDING_MEMBER")
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+      .map(toHonoraryTeamMember),
   };
 }

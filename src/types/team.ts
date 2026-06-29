@@ -37,5 +37,6 @@ export interface TeamData {
   creatives: DomainStructure;
   facultyMentors: TeamMember[];
   industrialMentors: TeamMember[];
+  advisoryCommittee: TeamMember[];
   foundingTeam: TeamMember[];
 }

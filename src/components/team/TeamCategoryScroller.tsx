@@ -12,14 +12,12 @@ interface TeamCategoryScrollerProps {
   categories: Category[];
   activeIndex: number;
   onCategoryChange: (index: number) => void;
-  isMobile?: boolean;
 }
 
 export function TeamCategoryScroller({
   categories,
   activeIndex,
   onCategoryChange,
-  isMobile = false,
 }: TeamCategoryScrollerProps) {
   const scrollerVariants = {
     container: {
@@ -55,7 +53,7 @@ export function TeamCategoryScroller({
 
   return (
     <motion.div
-      className={`team-category-scroller ${isMobile ? "mobile" : "desktop"}`}
+      className="team-category-scroller desktop"
       variants={scrollerVariants}
       initial="hidden"
       animate="visible"
@@ -77,7 +75,7 @@ export function TeamCategoryScroller({
               damping: 30,
               mass: 1,
             }}
-            whileHover={!isMobile ? { scale: 0.9, opacity: 0.7 } : undefined}
+            whileHover={{ scale: 0.9, opacity: 0.7 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="category-label">{category.name}</span>

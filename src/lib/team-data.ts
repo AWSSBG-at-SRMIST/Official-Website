@@ -41,7 +41,7 @@ export async function getTeamMembers(): Promise<RawMember[]> {
     );
     return (result.Items ?? []) as RawMember[];
   } catch (error) {
-    console.error("Failed to fetch team members from DynamoDB:", error);
+    console.error("Failed to fetch team members from DynamoDB.");
     return [];
   }
 }

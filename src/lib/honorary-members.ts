@@ -2,7 +2,7 @@ import "server-only";
 import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { ddbDocClient } from "./dynamodb";
 
-export type HonoraryTag = "FACULTY_MENTOR" | "INDUSTRIAL_MENTOR" | "FOUNDING_MEMBER";
+export type HonoraryTag = "FACULTY_MENTOR" | "INDUSTRIAL_MENTOR" | "FOUNDING_MEMBER" | "ADVISORY";
 
 export interface HonoraryMember {
   id: string;
@@ -11,6 +11,7 @@ export interface HonoraryMember {
   description?: string;
   linkedin?: string;
   photoUrl?: string | null;
+  order?: number;
 }
 
 /**
@@ -26,7 +27,7 @@ export async function getHonoraryMembers(): Promise<HonoraryMember[]> {
     );
     return (result.Items ?? []) as HonoraryMember[];
   } catch (error) {
-    console.error("Failed to fetch honorary members from DynamoDB:", error);
+    console.error("Failed to fetch honorary members from DynamoDB.");
     return [];
   }
 }

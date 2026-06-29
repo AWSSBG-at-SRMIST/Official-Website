@@ -19,8 +19,16 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "AWS Student Builder Group at SRMIST",
-  description: "Official website of AWS Student Builder Group at SRMIST.",
+  title: {
+    default: "AWS Student Builder Group at SRMIST",
+    template: "%s | AWS SBG at SRMIST",
+  },
+  description: "Official website of the AWS Student Builder Group at SRMIST — a community of cloud builders, engineers, and founders.",
+  metadataBase: new URL("https://awssbg-srmist.in"),
+  openGraph: {
+    siteName: "AWS SBG at SRMIST",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

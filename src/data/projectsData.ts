@@ -1,6 +1,5 @@
 export interface Contributor {
   name: string;
-  avatar: string;
 }
 
 export interface Project {
@@ -45,11 +44,9 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'Alex C.',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXdkBIM2cM9e_kjdStlkIL5uC3G6k5KUT8amiERg3-tWi3bL-76ell4tFsUQj380_te94CmTZDD2Lv3qrq_1Pyb0Wh-Tyb7WgSi4a2bjSE-pRG1WUrDO-Lwk3bOWnqk9lYIQMD1ZPn5Aw9wXGWRU58fvMledDwi0mphHNyZzMvs8jH3fzMs_PjzZmrCsG9hsiQjGZmRtGVO5O9j4eWxvWSXj0Z8xI3JjuojNpFX5w2hPrc2FTUBdco3T5jSSFX3cpI3rfEMU26smE'
       },
       {
         name: 'Sarah D.',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHb1LIpQx3FhMAvPXmR9PKHPuvQS2cu1cZ2S5mpIFTekFk3KmClnroqGfA8s-6onHOYAmKVHhw2_xYCTHLuyWYtNjJXVd0FOn_XP_oE2Wyd_iEA-wo6N8yqE93uk-eUTJYk2Tzc5IDz8zt6lo1mENtl_qhRv78zfG7WgLSFVyaSorhBVjt16GpFWCrt0jg-BcZ8FPW3qQpirh1SnfXEMTmnAoW_FZdu7DpA2C5QAcRmJBkWQw8hanXHufb1ZJ-Z6HzSixGzFKe4vU'
       }
     ],
     githubUrl: 'https://github.com',
@@ -69,7 +66,6 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'sam_builder',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA9LBE76RifC89ZsjPBGOaeYPoXiSnaJjtXJncRVGQm51JYCV5ZD4-tgg2lFecwIDvqJCSGaSwTJuQwb3N5R82Fon-mOY1LQBe5VP7KLLSenB5-c1M1KEbLqvw6sYkkEUt1MrAAGmNArixFsPYr-hKHZ8Sb3QYrvxQkXanCkywzP2I6_BiOFJSEYKcKykql02vWxuY7Y0XRJnpwUu3A3xOwbhFcnjpsvZUkZZ4RqXZfMDfQQFGNSCejpyrQrB5X7q9_8uy4ONydSzw'
       }
     ],
     githubUrl: 'https://github.com'
@@ -87,7 +83,6 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'dev_lisa',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHLSVtifYJpLAkKSfb8qLGPJiDXvix81CNwO30r8PGDX1GMcJF4pyMvvWmlPsKhIFVRS7XD1O7SSXmBFc2D-9nadCuxHRt1BvJiVlH_C2BtpbwPDmgBr5GbhC2erl_bgHN6cK8TLtpkq26CVQjK_8pLC7jwfqD39CNqP8ykfT0Cha60iksp5BedNsyTjn7wd3kICu0Pmf6o_1dEzKmzKa4rcDrvR2chv5HMZbI429qQJaiYS1Z2Qe-SuE-qLOdJDUWVCnAdmj6e38'
       }
     ],
     githubUrl: 'https://github.com'
@@ -106,7 +101,6 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'iot_pioneer',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDynAxJxoGTypLw8nM0IuiQ2TrRNZd1VBBjS1TMRSrMRpkYVal7cu1ImC6pmosLJWm-SqQx4KsVWf8dYBvGk39TWFCo9BMujBUt30S3ezMjpYq2EqjzavdTLbjSD1bF8QjuZUe6ql5-0u3Q-Ok1xhBkYB3RmtJJmT_LHnleW49MUAwnyi7i4Y_jmsvhR52GMr5IGZljikwcXNqZpybrWJpB3VTujmhGU-DcC1Sc68XaU9h29_Nf37y45KDHUQPqBkyxB0GxAuYiSIA'
       }
     ],
     githubUrl: 'https://github.com'
@@ -124,7 +118,6 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'web_wizard',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA9LBE76RifC89ZsjPBGOaeYPoXiSnaJjtXJncRVGQm51JYCV5ZD4-tgg2lFecwIDvqJCSGaSwTJuQwb3N5R82Fon-mOY1LQBe5VP7KLLSenB5-c1M1KEbLqvw6sYkkEUt1MrAAGmNArixFsPYr-hKHZ8Sb3QYrvxQkXanCkywzP2I6_BiOFJSEYKcKykql02vWxuY7Y0XRJnpwUu3A3xOwbhFcnjpsvZUkZZ4RqXZfMDfQQFGNSCejpyrQrB5X7q9_8uy4ONydSzw'
       }
     ],
     githubUrl: 'https://github.com',
@@ -143,7 +136,6 @@ export const projectsData: Project[] = [
     contributors: [
       {
         name: 'iot_genius',
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHLSVtifYJpLAkKSfb8qLGPJiDXvix81CNwO30r8PGDX1GMcJF4pyMvvWmlPsKhIFVRS7XD1O7SSXmBFc2D-9nadCuxHRt1BvJiVlH_C2BtpbwPDmgBr5GbhC2erl_bgHN6cK8TLtpkq26CVQjK_8pLC7jwfqD39CNqP8ykfT0Cha60iksp5BedNsyTjn7wd3kICu0Pmf6o_1dEzKmzKa4rcDrvR2chv5HMZbI429qQJaiYS1Z2Qe-SuE-qLOdJDUWVCnAdmj6e38'
       }
     ],
     githubUrl: 'https://github.com'

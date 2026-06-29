@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GlobeAnimation } from "./GlobeAnimation";
+import dynamic from "next/dynamic";
 import { BrainOverlay } from "./BrainOverlay";
 import Link from "next/link";
+
+const GlobeAnimation = dynamic(() => import("./GlobeAnimation").then((m) => ({ default: m.GlobeAnimation })), { ssr: false });
 
 const container = {
   hidden: {},
@@ -17,7 +19,7 @@ const item = {
 
 export function Hero() {
   return (
-    <section className="relative max-w-container-max mx-auto px-margin-desktop mb-stack-lg min-h-[85vh] flex items-center">
+    <section className="relative max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-stack-lg min-h-[85vh] flex items-center">
       {/* Background Globe Animation */}
       <GlobeAnimation />
       <BrainOverlay />

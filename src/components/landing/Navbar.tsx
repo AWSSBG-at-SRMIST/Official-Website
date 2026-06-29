@@ -12,8 +12,10 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
+  { href: "/events", label: "Events" },
   { href: "/team", label: "Team" },
   { href: "/achievements", label: "Achievements" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -34,12 +36,12 @@ export function Navbar() {
 
   const mobileLinkClass = (href: string) =>
     isLinkActive(href)
-      ? "text-primary font-semibold"
-      : "text-on-surface-variant hover:text-primary transition-colors duration-300";
+      ? "text-primary font-semibold block py-3"
+      : "text-on-surface-variant hover:text-primary transition-colors duration-300 block py-3";
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b-2 border-on-surface/10">
-      <div className="max-w-container-max mx-auto px-margin-desktop py-2 grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-2 grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
         <Link
           className="font-headline-md text-sm font-bold text-on-surface transition-all duration-300 hover:opacity-80 flex justify-start items-center gap-2"
           href="/"
@@ -50,17 +52,28 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center justify-center gap-6 font-label-md text-xs uppercase tracking-wide">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+            <Link
+              key={link.href}
+              href={link.href}
+              className={linkClass(link.href)}
+              aria-current={isLinkActive(link.href) ? "page" : undefined}
+            >
               {link.label}
             </Link>
           ))}
         </div>
 
-        <div className="flex justify-end items-center">
+        <div className="flex justify-end items-center gap-3">
+          <Link
+            href="/recruitment"
+            className="hidden md:inline-block text-xs uppercase tracking-wide font-bold px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300"
+          >
+            Recruitment
+          </Link>
           <button
             aria-label="Toggle menu"
             onClick={() => setIsOpen((v) => !v)}
-            className="md:hidden text-on-surface p-2"
+            className="md:hidden text-on-surface p-2.5"
           >
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -76,7 +89,7 @@ export function Navbar() {
             transition={{ duration: 0.25 }}
             className="md:hidden border-t-2 border-on-surface/10 bg-surface/95 backdrop-blur-md"
           >
-            <div className="flex flex-col px-margin-desktop py-4 gap-4 font-label-md text-sm uppercase tracking-wide">
+            <div className="flex flex-col px-margin-mobile py-2 gap-0 font-label-md text-sm uppercase tracking-wide">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -87,6 +100,13 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/recruitment"
+                onClick={() => setIsOpen(false)}
+                className="text-primary font-bold block py-3"
+              >
+                Recruitment
+              </Link>
             </div>
           </motion.div>
         )}

@@ -26,7 +26,7 @@ function Neuron({ angle, length, delay }: { angle: number; length: number; delay
         y1={0}
         x2={x2}
         y2={y2}
-        stroke="#D946EF"
+        stroke="currentColor"
         strokeWidth={1}
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.55 }}
@@ -36,7 +36,7 @@ function Neuron({ angle, length, delay }: { angle: number; length: number; delay
         cx={x2}
         cy={y2}
         r={3}
-        fill="#D946EF"
+        fill="currentColor"
         initial={{ opacity: 0.3, scale: 0.8 }}
         animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.4, 0.8] }}
         transition={{ duration: 2.4, repeat: Infinity, delay: delay + 0.4, ease: "easeInOut" }}
@@ -56,7 +56,7 @@ export function BrainOverlay() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <svg
             viewBox="-170 -170 340 340"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] sm:w-[340px] sm:h-[340px]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] text-[#D946EF]"
           >
             {NEURONS.map((n, i) => (
               <Neuron key={i} angle={n.angle} length={n.length} delay={i * 0.12} />

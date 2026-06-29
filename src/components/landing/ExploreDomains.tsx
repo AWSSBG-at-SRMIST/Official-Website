@@ -32,7 +32,7 @@ const domains = [
 
 export function ExploreDomains() {
   return (
-    <section className="py-stack-lg max-w-container-max mx-auto px-margin-desktop">
+    <section className="py-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
       <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-on-surface/10">
         {domains.map((domain, idx) => {
           const Icon = domain.icon;
@@ -43,7 +43,7 @@ export function ExploreDomains() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="border-r border-b border-on-surface/10 p-8 group hover:bg-surface-container-lowest transition-colors duration-300"
+              className="border-r border-b border-on-surface/10 p-5 md:p-8 group hover:bg-surface-container-lowest transition-colors duration-300"
             >
               <div className="flex items-start justify-between mb-8">
                 <Icon size={32} className="text-primary" />

@@ -58,7 +58,6 @@ export function BackgroundNetwork() {
       draw() {
         const x = this.col * GRID_SIZE;
         const y = this.row * GRID_SIZE;
-        // ease-in-out fade
         const opacity = Math.sin(this.t * Math.PI) * (0.5 + scrollProg * 0.4);
         const r = 2 + Math.sin(this.t * Math.PI) * 3;
 
@@ -80,12 +79,14 @@ export function BackgroundNetwork() {
 
     // ── Scanline sweep ──────────────────────────────────────────────────────
     let scanY = 0;
-    const SCAN_SPEED = 0.35; // px per ms-equivalent tick
+    const SCAN_SPEED = 0.35;
 
     let rafId: number;
     let lastTime = performance.now();
+    let isPaused = false;
 
     const draw = (now: number) => {
+      if (isPaused) return;
       rafId = requestAnimationFrame(draw);
       const dt = Math.min(0.05, (now - lastTime) / 1000);
       lastTime = now;
@@ -93,7 +94,6 @@ export function BackgroundNetwork() {
       ctx.fillStyle = "#0a0613";
       ctx.fillRect(0, 0, W, H);
 
-      // Grid lines — opacity ramps slightly with scroll
       const lineOpacity = 0.05 + scrollProg * 0.05;
       ctx.strokeStyle = `rgba(168, 85, 247, ${lineOpacity})`;
       ctx.lineWidth = 1;
@@ -112,7 +112,6 @@ export function BackgroundNetwork() {
         ctx.stroke();
       }
 
-      // Scanline sweep band
       scanY = (scanY + SCAN_SPEED) % (H + 200);
       const scanGradient = ctx.createLinearGradient(0, scanY - 100, 0, scanY + 100);
       scanGradient.addColorStop(0, "rgba(217, 70, 239, 0)");
@@ -121,7 +120,6 @@ export function BackgroundNetwork() {
       ctx.fillStyle = scanGradient;
       ctx.fillRect(0, scanY - 100, W, 200);
 
-      // Spawn + update + draw pulses
       if (pulses.length < MAX_PULSES && Math.random() < 0.02) {
         pulses.push(new Pulse(cols, rows));
       }
@@ -139,16 +137,30 @@ export function BackgroundNetwork() {
     };
     window.addEventListener("resize", onResize);
 
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+        isPaused = true;
+      } else if (isPaused) {
+        isPaused = false;
+        lastTime = performance.now();
+        draw(lastTime);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="fixed inset-0 w-full h-full pointer-events-none"
       style={{ zIndex: -1 }}
     />

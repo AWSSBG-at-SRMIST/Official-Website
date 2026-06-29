@@ -7,10 +7,9 @@ export function Loader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Cloud formation sequence takes roughly 2.5s total
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2800);
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, []);

@@ -38,7 +38,7 @@ function LinkRow({ member }: { member: TeamMember }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${member.name} on ${label}`}
-          className="w-7 h-7 flex items-center justify-center border border-on-surface/15 text-on-surface-variant hover:border-primary hover:text-primary transition-colors shrink-0"
+          className="w-9 h-9 flex items-center justify-center border border-on-surface/15 text-on-surface-variant hover:border-primary hover:text-primary transition-colors shrink-0"
         >
           <Icon size={12} />
         </a>
@@ -280,6 +280,12 @@ function MentorsSection({ data }: { data: TeamData }) {
     <div className="flex flex-col gap-10">
       <div>
         <h3 className="text-xs uppercase tracking-[0.2em] text-primary mb-4 border-b-2 border-on-surface/10 pb-3">
+          Advisory Committee
+        </h3>
+        <RosterGrid members={data.advisoryCommittee} emptyMessage="Advisory committee details coming soon." />
+      </div>
+      <div>
+        <h3 className="text-xs uppercase tracking-[0.2em] text-primary mb-4 border-b-2 border-on-surface/10 pb-3">
           Faculty Mentor
         </h3>
         <RosterGrid members={data.facultyMentors} emptyMessage="Faculty mentor details coming soon." />
@@ -321,7 +327,7 @@ export function TeamPageClient({ data }: { data: TeamData }) {
     <main className="pt-24 pb-stack-lg">
       {/* Hero Section */}
       <header className="mb-12 md:mb-16">
-        <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-gutter items-end">
             <div className="md:col-span-8">
               <h1 className="font-display text-[40px] sm:text-[64px] md:text-[80px] mb-4 tracking-tight leading-[0.95] font-bold text-on-surface">
@@ -341,7 +347,7 @@ export function TeamPageClient({ data }: { data: TeamData }) {
       </header>
 
       {/* Directory Section */}
-      <section className="relative w-full py-8 md:py-12 px-4 sm:px-6 md:px-margin-desktop border-y-2 border-on-surface/10 mx-auto max-w-container-max bg-surface-container-lowest">
+      <section className="relative w-full py-8 md:py-12 px-margin-mobile md:px-margin-desktop border-y-2 border-on-surface/10 mx-auto max-w-container-max bg-surface-container-lowest">
         <div className="flex flex-col gap-10 items-center w-full">
           <div className="w-full">
             <TeamCategoryScroller
