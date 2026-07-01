@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Geist } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { BackgroundNetwork } from "@/components/layout/BackgroundNetwork";
 import { Loader } from "@/components/layout/Loader";
 import { Navbar } from "@/components/landing/Navbar";
@@ -162,6 +163,7 @@ export default function RootLayout({
         <BackgroundNetwork />
         <Navbar />
         <PageTransition>{children}</PageTransition>
+        <Analytics />
       </body>
     </html>
   );
