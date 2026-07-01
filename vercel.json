@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/s/:code",
+      "destination": "https://internal-dashboard.awssbg-srmist.in/s/:code"
+    }
+  ]
+}
