@@ -2,6 +2,7 @@ import "server-only";
 import { RawMember, MemberRole } from "./team-data";
 import { HonoraryMember, HonoraryTag } from "./honorary-members";
 import { DomainStructure, SubdomainGroup, TeamData, TeamLevel, TeamMember } from "@/types/team";
+import { normalizeName } from "./team-photos";
 
 const LEVEL_BY_ROLE: Record<MemberRole, TeamLevel> = {
   SBG_LEADER: "presidium",
@@ -44,15 +45,12 @@ function humanizeRole(member: RawMember): string {
   }
 }
 
-function toTeamMember(member: RawMember): TeamMember {
+function toTeamMember(member: RawMember, photoMap: Record<string, string>): TeamMember {
   return {
     id: member.memberId,
     name: member.name,
     role: humanizeRole(member),
-    // No `image` field exists in DynamoDB yet — always null until the Google
-    // Drive photo lookup (src/lib/team-photos.ts) is wired in. The UI's
-    // existing initials-fallback renders whenever image is falsy.
-    image: null,
+    image: photoMap[normalizeName(member.name)] ?? null,
     imageAlt: member.name,
     initials: initialsOf(member.name),
     domains: member.subdomain ? [member.subdomain] : member.domain ? [member.domain] : [],
@@ -75,7 +73,7 @@ function toTeamMember(member: RawMember): TeamMember {
  * silently dropped or promoted, since the real structure is a fixed
  * one-manager-one-associate-per-subdomain shape.
  */
-function buildDomainStructure(domain: string, members: RawMember[]): DomainStructure {
+function buildDomainStructure(domain: string, members: RawMember[], photoMap: Record<string, string>): DomainStructure {
   const director = members.find((m) => m.role === "DIRECTOR" && m.domain === domain);
 
   const discovered = Array.from(
@@ -91,13 +89,13 @@ function buildDomainStructure(domain: string, members: RawMember[]): DomainStruc
 
     return {
       name,
-      manager: manager ? toTeamMember(manager) : undefined,
-      associate: associate ? toTeamMember(associate) : undefined,
+      manager: manager ? toTeamMember(manager, photoMap) : undefined,
+      associate: associate ? toTeamMember(associate, photoMap) : undefined,
     };
   });
 
   return {
-    director: director ? toTeamMember(director) : undefined,
+    director: director ? toTeamMember(director, photoMap) : undefined,
     groups,
   };
 }
@@ -120,12 +118,12 @@ const HONORARY_LEVEL: Record<HonoraryTag, TeamLevel> = {
 // dashboard, so they live in sbg-honorary-members (managed from the Internal
 // Dashboard) rather than sbg-members — converted into the same TeamMember
 // shape so the existing roster UI doesn't need to know the difference.
-function toHonoraryTeamMember(member: HonoraryMember): TeamMember {
+function toHonoraryTeamMember(member: HonoraryMember, photoMap: Record<string, string>): TeamMember {
   return {
     id: member.id,
     name: member.name,
     role: HONORARY_ROLE_LABEL[member.tag],
-    image: member.photoUrl || null,
+    image: member.photoUrl || photoMap[normalizeName(member.name)] || null,
     imageAlt: member.name,
     initials: initialsOf(member.name),
     linkedinUrl: member.linkedin || undefined,
@@ -134,31 +132,35 @@ function toHonoraryTeamMember(member: HonoraryMember): TeamMember {
   };
 }
 
-export function buildTeamTree(members: RawMember[], honoraryMembers: HonoraryMember[] = []): TeamData {
+export function buildTeamTree(
+  members: RawMember[],
+  honoraryMembers: HonoraryMember[] = [],
+  photoMap: Record<string, string> = {}
+): TeamData {
   const leader = members.find((m) => m.role === "SBG_LEADER");
   const secretary = members.find((m) => m.role === "SECRETARY");
 
   return {
-    leader: leader ? toTeamMember(leader) : undefined,
-    secretary: secretary ? toTeamMember(secretary) : undefined,
-    technical: buildDomainStructure("Technical", members),
-    corporate: buildDomainStructure("Corporate", members),
-    creatives: buildDomainStructure("Creatives", members),
+    leader: leader ? toTeamMember(leader, photoMap) : undefined,
+    secretary: secretary ? toTeamMember(secretary, photoMap) : undefined,
+    technical: buildDomainStructure("Technical", members, photoMap),
+    corporate: buildDomainStructure("Corporate", members, photoMap),
+    creatives: buildDomainStructure("Creatives", members, photoMap),
     facultyMentors: honoraryMembers
       .filter((m) => m.tag === "FACULTY_MENTOR")
       .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
-      .map(toHonoraryTeamMember),
+      .map((m) => toHonoraryTeamMember(m, photoMap)),
     industrialMentors: honoraryMembers
       .filter((m) => m.tag === "INDUSTRIAL_MENTOR")
       .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
-      .map(toHonoraryTeamMember),
+      .map((m) => toHonoraryTeamMember(m, photoMap)),
     advisoryCommittee: honoraryMembers
       .filter((m) => m.tag === "ADVISORY")
       .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
-      .map(toHonoraryTeamMember),
+      .map((m) => toHonoraryTeamMember(m, photoMap)),
     foundingTeam: honoraryMembers
       .filter((m) => m.tag === "FOUNDING_MEMBER")
       .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
-      .map(toHonoraryTeamMember),
+      .map((m) => toHonoraryTeamMember(m, photoMap)),
   };
 }

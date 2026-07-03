@@ -39,7 +39,7 @@ export function Hero() {
             variants={item}
             className="text-xs uppercase tracking-[0.2em] text-primary"
           >
-            AWS Student Builder Group at SRMIST — Cloud Computing Community, SRM KTR
+            AWS Student Builder Group at SRMIST
           </motion.p>
 
           <motion.h1
@@ -55,10 +55,9 @@ export function Hero() {
             variants={item}
             className="text-label-md text-on-surface-variant max-w-lg border-l-2 border-primary/40 pl-5"
           >
-            AWS Student Builder Group (AWS SBG) at SRMIST, Kattankulathur is
-            the official student-led cloud computing community at SRM. Build
-            real AWS projects, get certified, and launch your cloud engineering
-            career.
+            AWS Student Builder Group at SRMIST is the official student tech
+            community at SRM, Kattankulathur — building on AWS, AI, data
+            engineering, and modern software development.
           </motion.p>
 
           <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ComingSoonPage } from "@/components/layout/ComingSoonPage";
 
 export const metadata: Metadata = {
-  title: "Join AWS Student Builder Group at SRMIST | Recruitments",
+  title: "Recruitments",
   description:
-    "Apply to join AWS Student Builder Group (AWS SBG) at SRMIST — open to all departments, all years. No prior cloud experience required. Applications opening soon.",
+    "Apply to join AWS Student Builder Group at SRMIST — open to all departments, all years. No prior experience required. Build on AWS, AI, data, and more.",
   alternates: { canonical: "https://awssbg-srmist.in/recruitments" },
   openGraph: { url: "https://awssbg-srmist.in/recruitments" },
 };

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ContactPageClient } from "./ContactPageClient";
 
 export const metadata: Metadata = {
-  title: "Contact AWS Student Builder Group at SRMIST",
+  title: "Contact",
   description:
-    "Get in touch with AWS Student Builder Group at SRMIST for collaborations, sponsorships, or general queries. Reach the cloud computing community at SRM Kattankulathur.",
+    "Get in touch with AWS Student Builder Group at SRMIST for collaborations, sponsorships, or general queries. Reach the student tech community at SRM Kattankulathur.",
   alternates: { canonical: "https://awssbg-srmist.in/contact" },
   openGraph: { url: "https://awssbg-srmist.in/contact" },
 };

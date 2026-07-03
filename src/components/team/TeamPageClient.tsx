@@ -3,6 +3,7 @@
 import { ReactNode, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Linkedin, Github, Instagram, Cloud, Globe, Users } from "lucide-react";
+import Image from "next/image";
 import { TeamCategoryScroller } from "./TeamCategoryScroller";
 import { DomainStructure, SubdomainGroup, TeamData, TeamMember } from "@/types/team";
 
@@ -62,14 +63,20 @@ function avatarGradient(id: string): string {
 
 function InitialsSwatch({ member, size = "md" }: { member: TeamMember; size?: "md" | "lg" }) {
   const dim = size === "lg" ? "w-24 h-24 text-3xl" : "w-16 h-16 text-xl";
+  const px = size === "lg" ? 96 : 64;
   return (
     <div
-      className={`${dim} shrink-0 flex items-center justify-center text-white font-display font-bold overflow-hidden border-2 border-on-surface/10`}
+      className={`${dim} relative shrink-0 flex items-center justify-center text-white font-display font-bold overflow-hidden border-2 border-on-surface/10`}
       style={member.image ? undefined : { background: avatarGradient(member.id) }}
     >
       {member.image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img alt={member.imageAlt} src={member.image} className="w-full h-full object-cover" />
+        <Image
+          alt={member.imageAlt}
+          src={member.image}
+          fill
+          sizes={`${px}px`}
+          className="object-cover"
+        />
       ) : (
         member.initials
       )}

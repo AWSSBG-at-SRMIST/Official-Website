@@ -4,11 +4,12 @@ import { TeamPageClient } from "@/components/team/TeamPageClient";
 import { getTeamMembers } from "@/lib/team-data";
 import { getHonoraryMembers } from "@/lib/honorary-members";
 import { buildTeamTree } from "@/lib/team-tree";
+import { getTeamPhotoMap } from "@/lib/team-photos";
 
 export const metadata: Metadata = {
-  title: "Team | AWS Student Builder Group at SRMIST",
+  title: "Team",
   description:
-    "Meet the student builders, leads, and mentors behind AWS Student Builder Group at SRMIST — the cloud computing community at SRM Kattankulathur, Tamil Nadu.",
+    "Meet the student builders, leads, and mentors behind AWS Student Builder Group at SRMIST — the student tech community at SRM Kattankulathur, Tamil Nadu.",
   alternates: { canonical: "https://awssbg-srmist.in/team" },
   openGraph: { url: "https://awssbg-srmist.in/team" },
 };
@@ -27,13 +28,17 @@ const breadcrumbSchema = {
 export const revalidate = 300;
 
 export default async function TeamPage() {
-  const [members, honoraryMembers] = await Promise.all([getTeamMembers(), getHonoraryMembers()]);
+  const [members, honoraryMembers, photoMap] = await Promise.all([
+    getTeamMembers(),
+    getHonoraryMembers(),
+    getTeamPhotoMap(),
+  ]);
 
   let teamData;
   try {
-    teamData = buildTeamTree(members, honoraryMembers);
+    teamData = buildTeamTree(members, honoraryMembers, photoMap);
   } catch {
-    teamData = buildTeamTree([], []);
+    teamData = buildTeamTree([], [], {});
   }
 
   return (

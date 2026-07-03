@@ -24,22 +24,24 @@ const BASE_URL = "https://awssbg-srmist.in";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "AWS Student Builder Group at SRMIST | Cloud Computing Community",
+    default: "AWS Student Builder Group at SRMIST",
     template: "%s | AWS SBG at SRMIST",
   },
   description:
-    "AWS Student Builder Group (AWS SBG) at SRMIST is the official cloud computing student community at SRM Kattankulathur, Tamil Nadu. Build real AWS projects, get AWS certified, and launch your cloud career.",
+    "AWS Student Builder Group at SRMIST is the official student tech community at SRM KTR, Kattankulathur — building on AWS, AI, data engineering, cloud infrastructure, and modern software development.",
   keywords: [
     "AWS Student Builder Group SRMIST",
     "AWS SBG SRMIST",
-    "cloud computing club SRMIST",
+    "student tech community SRMIST",
     "AWS club SRM",
     "AWS student community India",
-    "cloud computing student group SRM Kattankulathur",
+    "tech community SRM Kattankulathur",
     "AWS certification students SRMIST",
     "tech club SRMIST",
     "SRMIST student tech community",
     "AWS student builder group India",
+    "AI community SRMIST",
+    "data engineering club SRMIST",
   ],
   authors: [{ name: "AWS Student Builder Group at SRMIST", url: BASE_URL }],
   creator: "AWS Student Builder Group at SRMIST",
@@ -49,23 +51,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: BASE_URL,
-    title: "AWS Student Builder Group at SRMIST | Cloud Computing Community",
+    title: "AWS Student Builder Group at SRMIST",
     description:
-      "Official cloud computing student community at SRMIST, Kattankulathur. Build on AWS, get certified, and join India's top student cloud community.",
+      "Official student tech community at SRMIST, SRM KTR — building on AWS, AI, data engineering, and modern software. Join India's top student builder community.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AWS Student Builder Group at SRMIST — Cloud Computing Community",
+        alt: "AWS Student Builder Group at SRMIST — Student Tech Community",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AWS Student Builder Group at SRMIST | Cloud Computing Community",
+    title: "AWS Student Builder Group at SRMIST",
     description:
-      "Official cloud computing student community at SRMIST, Kattankulathur. Build on AWS, get certified, and join India's top student cloud community.",
+      "Official student tech community at SRMIST, SRM KTR — building on AWS, AI, data engineering, and modern software. Join India's top student builder community.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -90,7 +92,7 @@ const organizationSchema = {
   url: BASE_URL,
   logo: `${BASE_URL}/logo.png`,
   description:
-    "AWS Student Builder Group (AWS SBG) at SRMIST is the official student-led cloud computing community at SRM Institute of Science and Technology, Kattankulathur, Tamil Nadu. Focused on hands-on AWS learning, certifications, and real-world cloud projects.",
+    "AWS Student Builder Group at SRMIST is the official student tech community at SRM Institute of Science and Technology, Kattankulathur, Tamil Nadu. Focused on AWS products, AI, data engineering, cloud infrastructure, and modern software development.",
   foundingDate: "2025",
   location: {
     "@type": "Place",
@@ -116,14 +118,15 @@ const organizationSchema = {
   },
   knowsAbout: [
     "Amazon Web Services",
+    "Artificial Intelligence",
+    "Data Engineering",
     "Cloud Computing",
     "AWS Certification",
-    "Cloud Architecture",
+    "Machine Learning",
     "DevOps",
     "Serverless Computing",
     "Infrastructure as Code",
-    "Container Orchestration",
-    "Cloud Security",
+    "Modern Software Development",
   ],
 };
 
@@ -133,7 +136,7 @@ const websiteSchema = {
   name: "AWS Student Builder Group at SRMIST",
   url: BASE_URL,
   description:
-    "Official website of AWS Student Builder Group at SRMIST — cloud computing community for students at SRM KTR, Kattankulathur, Tamil Nadu.",
+    "Official website of AWS Student Builder Group at SRMIST — student tech community at SRM KTR, Kattankulathur, Tamil Nadu.",
   publisher: {
     "@type": "Organization",
     name: "AWS Student Builder Group at SRMIST",

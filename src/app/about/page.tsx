@@ -4,9 +4,9 @@ import { Footer } from "@/components/landing/Footer";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
 
 export const metadata: Metadata = {
-  title: "About AWS Student Builder Group at SRMIST | Cloud Community SRM KTR",
+  title: "About",
   description:
-    "Learn about AWS Student Builder Group (AWS SBG) at SRMIST — the official cloud computing student community at SRM Kattankulathur. Our mission, vision, and why we exist.",
+    "Learn about AWS Student Builder Group at SRMIST — the official student tech community at SRM KTR focused on AWS, AI, data engineering, and modern software. Our mission, vision, and why we exist.",
   alternates: { canonical: "https://awssbg-srmist.in/about" },
   openGraph: { url: "https://awssbg-srmist.in/about" },
 };
@@ -29,7 +29,7 @@ const faqSchema = {
       name: "What is AWS Student Builder Group at SRMIST?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "AWS Student Builder Group (AWS SBG) at SRMIST is the official student-led cloud computing community at SRM Institute of Science and Technology, Kattankulathur. It is the first club at SRMIST fully dedicated to cloud computing on Amazon Web Services, covering everything from cloud fundamentals to advanced architecture, infrastructure as code, and cloud security.",
+        text: "AWS Student Builder Group at SRMIST is the official student tech community at SRM Institute of Science and Technology, Kattankulathur. We work across AWS products, AI, data engineering, cloud infrastructure, and modern software development — building real projects and preparing students for industry roles.",
       },
     },
     {
@@ -37,15 +37,15 @@ const faqSchema = {
       name: "How can I join AWS Student Builder Group at SRMIST?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "You can join AWS Student Builder Group at SRMIST by applying during our open recruitment periods. Visit the Recruitments page on our website to apply. AWS SBG is open to students from every department and every year — no prior cloud experience is required.",
+        text: "You can join AWS Student Builder Group at SRMIST by applying during our open recruitment periods. Visit the Recruitments page on our website to apply. AWS SBG at SRMIST is open to students from every department and every year — no prior experience required.",
       },
     },
     {
       "@type": "Question",
-      name: "Do I need prior cloud experience to join AWS SBG at SRMIST?",
+      name: "Do I need prior experience to join AWS SBG at SRMIST?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. AWS Student Builder Group at SRMIST is open to every department and every year — no prior cloud experience required. We provide structured learning pathways from cloud fundamentals all the way to advanced topics like container orchestration, serverless architecture, and cloud security.",
+        text: "No. AWS Student Builder Group at SRMIST is open to every department and every year — no prior experience required. We have structured learning tracks covering AWS fundamentals, AI, data engineering, DevOps, and software development from the ground up.",
       },
     },
     {
@@ -53,7 +53,7 @@ const faqSchema = {
       name: "What does AWS Student Builder Group at SRMIST do?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "AWS SBG at SRMIST runs hands-on workshops, real-world project teams, AWS certification prep sessions, and connects students with the broader AWS Community Builders and AWS Heroes network. We focus on practical cloud skills, production-grade builds, and preparing students for cloud, DevOps, and platform engineering careers.",
+        text: "AWS SBG at SRMIST runs hands-on workshops, real-world project teams, AWS certification prep, and events across AI, data, cloud, and software development. We connect students with the AWS Community Builders and AWS Heroes network and prepare them for roles in tech, DevOps, and platform engineering.",
       },
     },
     {

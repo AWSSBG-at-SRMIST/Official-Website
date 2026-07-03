@@ -8,9 +8,9 @@ import { BuildTogetherCta } from "@/components/landing/BuildTogetherCta";
 import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
-  title: "AWS Student Builder Group at SRMIST | Cloud Computing Community",
+  title: { absolute: "AWS Student Builder Group at SRMIST | Student Tech Community" },
   description:
-    "AWS Student Builder Group (AWS SBG) at SRMIST is the official cloud computing student community at SRM Kattankulathur, Tamil Nadu. Build real AWS projects, get AWS certified, and launch your cloud career.",
+    "AWS Student Builder Group at SRMIST is the official student tech community at SRM Kattankulathur, Tamil Nadu — building on AWS, AI, data engineering, and modern software development.",
   alternates: {
     canonical: "https://awssbg-srmist.in",
   },
