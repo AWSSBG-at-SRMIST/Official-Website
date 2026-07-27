@@ -5,6 +5,7 @@ import { BackgroundNetwork } from "@/components/layout/BackgroundNetwork";
 import { Loader } from "@/components/layout/Loader";
 import { Navbar } from "@/components/landing/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
+import ChatWidget from "@/components/chat/ChatWidget";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -166,6 +167,7 @@ export default function RootLayout({
         <BackgroundNetwork />
         <Navbar />
         <PageTransition>{children}</PageTransition>
+        <ChatWidget />
         <Analytics />
       </body>
     </html>
