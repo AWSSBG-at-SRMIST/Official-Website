@@ -11,7 +11,7 @@ export async function GET() {
       persistedQuery: {
         version: 1,
         sha256Hash:
-          '321388b1e4a11b17a57efe3ae7a90abfecbc703a4f4e99519772294924c21351',
+          process.env.MEETUP_API_TOKEN,
       },
     },
   };
