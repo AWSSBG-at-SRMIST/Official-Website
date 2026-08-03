@@ -8,28 +8,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-function formatDate(iso?: string) {
-  if (!iso) return 'TBD';
-  try {
-    return new Date(iso).toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  } catch {
-    return iso;
-  }
-}
-
-function excerpt(text?: string, length = 140) {
-  if (!text) return '';
-  const plain = text.replace(/\n+/g, ' ').replace(/\*\*/g, '');
-  return plain.length > length ? `${plain.slice(0, length).trim()}…` : plain;
-}
+// Removed unused functions
 
 export default async function EventsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let edges: any[] = [];
 
   try {
@@ -49,7 +31,7 @@ export default async function EventsPage() {
   } catch (err) {
     // log error so dev console shows why fetch failed
     // (keeps rendering safe for users)
-    // eslint-disable-next-line no-console
+    // (keeps rendering safe for users)
     console.error('Error fetching past events:', err);
     edges = [];
   }
@@ -73,8 +55,8 @@ export default async function EventsPage() {
         </div>
       ) : (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {edges.map(({ node }: any) => (
-            <EventCard key={node.id} node={node} />
+          {edges.map(({ node }: { node: Record<string, unknown> }) => (
+            <EventCard key={String(node.id)} node={node} />
           ))}
         </div>
       )}

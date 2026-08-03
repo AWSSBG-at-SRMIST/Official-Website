@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props = { node: any };
 
 function formatDate(iso?: string) {
@@ -35,11 +36,14 @@ export default function EventCard({ node }: Props) {
     <article className="border-2 border-on-surface/10 bg-surface p-4 flex flex-col h-full">
       <div className="flex-shrink-0">
         {node.displayPhoto?.highResUrl ? (
-          <img
-            src={node.displayPhoto.highResUrl}
-            alt={node.title ?? "Event image"}
-            className="w-full h-48 object-cover border-2 border-on-surface/10"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={node.displayPhoto.highResUrl}
+              alt={node.title ?? "Event image"}
+              className="w-full h-48 object-cover border-2 border-on-surface/10"
+            />
+          </>
         ) : (
           <div className="w-full h-48 bg-surface-container-lowest border-2 border-on-surface/10 flex items-center justify-center text-sm text-on-surface-variant">
             No image

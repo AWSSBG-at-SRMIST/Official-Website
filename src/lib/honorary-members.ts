@@ -27,7 +27,7 @@ export async function getHonoraryMembers(): Promise<HonoraryMember[]> {
     );
     return (result.Items ?? []) as HonoraryMember[];
   } catch (error) {
-    console.error("Failed to fetch honorary members from DynamoDB.");
+    console.error("Failed to fetch honorary members from DynamoDB.", error);
     return [];
   }
 }
