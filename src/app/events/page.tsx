@@ -10,34 +10,40 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Meetup's API is unofficial/reverse-engineered and occasionally rejects
-// requests (401) — without a revalidate window, a single failed build-time
-// fetch gets baked into the static page and stays wrong until the next
-// deploy. This bounds the staleness to at most an hour instead.
-export const revalidate = 3600;
+// Meetup's API is unofficial/reverse-engineered and occasionally rejects a
+// request (401/503) even when the credentials are fine — ISR caching turned
+// a single bad build into a permanently-stale page. Fetching fresh on every
+// request (with a quick retry for exactly this kind of transient failure)
+// means a flaky Meetup response can delay a page load by a second, at worst
+// — never freeze wrong data in place.
+export const dynamic = 'force-dynamic';
 
-export default async function EventsPage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let edges: any[] = [];
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchPastEvents(url: string, attempt = 1): Promise<any[]> {
   try {
-    const host = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
-      ? (process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}`)
-      : `http://localhost:${process.env.PORT ?? 3000}`;
-
-    const url = new URL('/api/meetup/past-events', host).toString();
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {
       console.error('Events API responded with non-OK status', res.status);
-      edges = [];
-    } else {
-      const data = await res.json();
-      edges = data?.data?.groupByUrlname?.events?.edges ?? [];
+      if (attempt < 2) return fetchPastEvents(url, attempt + 1);
+      return [];
     }
+    const data = await res.json();
+    return data?.data?.groupByUrlname?.events?.edges ?? [];
   } catch (err) {
     console.error('Error fetching past events:', err);
-    edges = [];
+    if (attempt < 2) return fetchPastEvents(url, attempt + 1);
+    return [];
   }
+}
+
+export default async function EventsPage() {
+  const host = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
+    ? (process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}`)
+    : `http://localhost:${process.env.PORT ?? 3000}`;
+  const url = new URL('/api/meetup/past-events', host).toString();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const edges: any[] = await fetchPastEvents(url);
 
   const stats = [
     { index: "01", icon: CalendarDays, label: "Sessions", value: `${edges.length} Hosted` },

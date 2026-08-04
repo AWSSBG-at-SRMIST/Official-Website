@@ -16,6 +16,12 @@ export async function GET() {
     },
   };
 
+  // Meetup's unofficial API occasionally returns a transient 401/503 —
+  // caching this fetch would freeze that failure in Next's Data Cache for
+  // the full window (including the error itself), so the /events page's
+  // own retry would just hit the same cached failure instead of actually
+  // retrying against Meetup. Always fetch fresh; the page above is the
+  // layer responsible for retrying and for its own request-level caching.
   const response = await fetch('https://www.meetup.com/gql2', {
     method: 'POST',
     headers: {
@@ -24,7 +30,7 @@ export async function GET() {
       Accept: 'application/json',
     },
     body: JSON.stringify(payload),
-    next: { revalidate: 3600 }, // cache for 1 hour
+    cache: 'no-store',
   });
 
   if (!response.ok) {
