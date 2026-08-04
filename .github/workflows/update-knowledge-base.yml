@@ -3,35 +3,53 @@ name: Update chatbot knowledge base
 on:
   schedule:
     - cron: "0 */12 * * *"
+  # Regenerate right away when the hand-maintained club info or the generator
+  # changes. The bot's own commit only touches knowledge-base.json (and pushes
+  # made with GITHUB_TOKEN never trigger workflows), so this can't loop.
+  push:
+    branches: [main]
+    paths:
+      - src/data/club-info.md
+      - scripts/generate-knowledge-base.ts
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: update-knowledge-base
+  cancel-in-progress: false
+
 jobs:
   update-knowledge-base:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
           cache: "npm"
 
       - run: npm ci
 
+      # No AWS credentials or other secrets needed: the roster comes from the
+      # deployed site's /api/team route, projects from the public GitHub org,
+      # and events from Meetup's public GraphQL. GITHUB_TOKEN only lifts the
+      # GitHub API rate limit.
       - name: Generate knowledge base
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx scripts/generate-knowledge-base.ts
 
+      # The chatbot imports knowledge-base.json at build time, so this push is
+      # what gets new data live: Vercel redeploys on it. Keep [skip ci] out of
+      # the message so nothing skips that deploy.
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/knowledge-base.json
-          git diff --staged --quiet || git commit -m "chore: refresh chatbot knowledge base [skip ci]"
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: refresh chatbot knowledge base"
           git push
