@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Meetup's API is unofficial/reverse-engineered and occasionally rejects
+// requests (401) — without a revalidate window, a single failed build-time
+// fetch gets baked into the static page and stays wrong until the next
+// deploy. This bounds the staleness to at most an hour instead.
+export const revalidate = 3600;
+
 export default async function EventsPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let edges: any[] = [];
