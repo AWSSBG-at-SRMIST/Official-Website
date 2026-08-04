@@ -3,12 +3,13 @@ import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
 import { ResearchCard } from "@/components/projects/ResearchCard";
 import { FeaturedProjectCard } from "@/components/projects/FeaturedProjectCard";
 import { AnimatedSection } from "@/components/projects/AnimatedSection";
+import { Footer } from "@/components/landing/Footer";
 import { researchPapersData, featuredProjectsData } from "@/components/projects/data";
 import type { GitHubRepo } from "@/components/projects/types";
 import { BookOpenText, Code2, Layers, Cloud, Sparkles, ArrowDown } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Projects & Research | AWS SBG at SRMIST",
+  title: "Projects & Research",
   description: "Explore the open-source software, research publications, and AI products built by the AWS Student Builder Group at SRMIST community.",
   robots: { index: true, follow: true },
 };
@@ -47,6 +48,7 @@ export default async function ProjectsPage() {
   const repos = await getOrganizationRepos();
 
   return (
+    <>
     <main className="min-h-screen py-16 md:py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex flex-col gap-16 md:gap-24">
       {/* Editorial Hero Banner */}
       <AnimatedSection className="flex flex-col gap-8 border-b-2 border-on-surface/10 pb-12">
@@ -170,5 +172,7 @@ export default async function ProjectsPage() {
         <ProjectsGrid repos={repos} />
       </AnimatedSection>
     </main>
+    <Footer />
+    </>
   );
 }

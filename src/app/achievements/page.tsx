@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ComingSoonPage } from "@/components/layout/ComingSoonPage";
 
 export const metadata: Metadata = {
-  title: "Achievements | AWS SBG at SRMIST",
+  title: "Achievements",
   description: "Achievements and milestones of the AWS Student Builder Group at SRMIST.",
   robots: { index: false, follow: false },
 };

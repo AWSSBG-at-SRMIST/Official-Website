@@ -100,11 +100,11 @@ export function ContactPageClient() {
                 </h2>
                 <ul className="flex flex-col gap-3 text-sm text-on-surface-variant">
                   {[
-                    "Sponsorships & brand partnerships",
-                    "Event collaborations & co-hosting",
-                    "Speaker sessions & workshops",
-                    "Media & press enquiries",
-                    "General queries",
+                    "Sponsorships & Brand Partnerships",
+                    "Event Collaborations & Co-hosting",
+                    "Speaker Sessions & Workshops",
+                    "Media & Press Enquiries",
+                    "General Queries",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0" />
@@ -222,7 +222,7 @@ export function ContactPageClient() {
           </div>
         </section>
         {/* Map */}
-        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-stack-lg">
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-16 md:pt-20 pb-stack-lg">
           <div className="relative border-2 border-on-surface/10 min-h-[260px]">
             <CornerBrackets className="z-10" />
             <iframe
