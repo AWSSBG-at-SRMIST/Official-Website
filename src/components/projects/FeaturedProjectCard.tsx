@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ExternalLink, Github, Sparkles, Terminal } from "lucide-react";
+import { ExternalLink, Sparkles, Terminal } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 import type { FeaturedProject } from "./types";
 
 interface FeaturedProjectCardProps {
@@ -94,7 +95,7 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
             className="inline-flex items-center justify-center p-3 rounded-xl border-2 border-on-surface/20 text-on-surface hover:border-primary hover:text-primary hover:bg-primary/10 transition-colors"
             aria-label={`GitHub Repository for ${project.title}`}
           >
-            <Github className="h-5 w-5" />
+            <SiGithub className="h-5 w-5" />
           </a>
         )}
       </div>

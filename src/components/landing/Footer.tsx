@@ -1,11 +1,12 @@
-import { Github, Heart, Instagram, Linkedin } from "lucide-react";
-import { SiMeetup, SiWhatsapp } from "react-icons/si";
+import { Heart } from "lucide-react";
+import { SiMeetup, SiWhatsapp, SiInstagram, SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 
 const SOCIALS = [
-  { href: "https://www.instagram.com/awssbg.srmist/", label: "Instagram", icon: Instagram },
-  { href: "https://in.linkedin.com/company/awssbg-srmist", label: "LinkedIn", icon: Linkedin },
+  { href: "https://www.instagram.com/awssbg.srmist/", label: "Instagram", icon: SiInstagram },
+  { href: "https://in.linkedin.com/company/awssbg-srmist", label: "LinkedIn", icon: FaLinkedin },
   { href: "https://www.meetup.com/awssbg-srmist/", label: "Meetup", icon: SiMeetup },
-  { href: "https://github.com/AWSSBG-at-SRMIST", label: "GitHub", icon: Github },
+  { href: "https://github.com/AWSSBG-at-SRMIST", label: "GitHub", icon: SiGithub },
   { href: "https://chat.whatsapp.com/Ckmq15FNNjVIGftTJhIlgZ", label: "WhatsApp Community", icon: SiWhatsapp },
 ];
 

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Star, GitFork, ExternalLink, Github, Globe } from "lucide-react";
+import { Star, GitFork, ExternalLink, Globe } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 import type { GitHubRepo } from "./types";
 
 const languageColors: Record<string, string> = {
@@ -92,7 +93,7 @@ export function ProjectCard({ repo }: ProjectCardProps) {
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
-                  <Github className="h-4 w-4" />
+                  <SiGithub className="h-4 w-4" />
                 </div>
                 <h3 className="text-body-lg font-bold text-on-surface group-hover:text-primary transition-colors line-clamp-1">
                   {repo.name}

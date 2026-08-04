@@ -1,8 +1,10 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ComponentType, ReactNode, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Linkedin, Github, Instagram, Cloud, Globe, Users } from "lucide-react";
+import { Cloud, Globe, Users } from "lucide-react";
+import { SiGithub, SiInstagram } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import Image from "next/image";
 import { TeamCategoryScroller } from "./TeamCategoryScroller";
 import { DomainStructure, SubdomainGroup, TeamData, TeamMember } from "@/types/team";
@@ -18,10 +20,10 @@ const categories = [
 
 type DomainCategoryId = "technical" | "corporate" | "creatives";
 
-const LINKS: Array<{ key: keyof TeamMember; icon: typeof Linkedin; label: string }> = [
-  { key: "linkedinUrl", icon: Linkedin, label: "LinkedIn" },
-  { key: "githubUrl", icon: Github, label: "GitHub" },
-  { key: "instagramUrl", icon: Instagram, label: "Instagram" },
+const LINKS: Array<{ key: keyof TeamMember; icon: ComponentType<{ size?: number | string }>; label: string }> = [
+  { key: "linkedinUrl", icon: FaLinkedin, label: "LinkedIn" },
+  { key: "githubUrl", icon: SiGithub, label: "GitHub" },
+  { key: "instagramUrl", icon: SiInstagram, label: "Instagram" },
   { key: "meetupUrl", icon: Users, label: "Meetup" },
   { key: "builderUrl", icon: Cloud, label: "AWS Builder Profile" },
   { key: "portfolioUrl", icon: Globe, label: "Portfolio" },

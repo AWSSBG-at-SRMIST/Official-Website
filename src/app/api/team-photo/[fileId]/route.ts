@@ -11,9 +11,13 @@ export async function GET(
     return new NextResponse(null, { status: 400 });
   }
 
+  // Photos routinely exceed Next.js's 2MB Data Cache item limit — `next.revalidate`
+  // silently fails to cache them and re-fetches from Drive on every request.
+  // The Cache-Control header below is what actually caches this response
+  // (browser + CDN), so the outbound fetch itself doesn't need caching.
   const res = await fetch(
     `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?alt=media&key=${apiKey}`,
-    { next: { revalidate: 86400 } }
+    { cache: "no-store" }
   );
 
   if (!res.ok) {
