@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import EventCard from "@/components/events/EventCard";
 import { Footer } from "@/components/landing/Footer";
+import { getPastEventEdges } from "@/lib/meetup";
 import { CalendarDays, Globe2, Link2 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -13,37 +14,13 @@ export const metadata: Metadata = {
 // Meetup's API is unofficial/reverse-engineered and occasionally rejects a
 // request (401/503) even when the credentials are fine — ISR caching turned
 // a single bad build into a permanently-stale page. Fetching fresh on every
-// request (with a quick retry for exactly this kind of transient failure)
-// means a flaky Meetup response can delay a page load by a second, at worst
-// — never freeze wrong data in place.
+// request (getPastEventEdges retries once internally too) means a flaky
+// Meetup response can delay a page load by a second, at worst — never
+// freeze wrong data in place.
 export const dynamic = 'force-dynamic';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fetchPastEvents(url: string, attempt = 1): Promise<any[]> {
-  try {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) {
-      console.error('Events API responded with non-OK status', res.status);
-      if (attempt < 2) return fetchPastEvents(url, attempt + 1);
-      return [];
-    }
-    const data = await res.json();
-    return data?.data?.groupByUrlname?.events?.edges ?? [];
-  } catch (err) {
-    console.error('Error fetching past events:', err);
-    if (attempt < 2) return fetchPastEvents(url, attempt + 1);
-    return [];
-  }
-}
-
 export default async function EventsPage() {
-  const host = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
-    ? (process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}`)
-    : `http://localhost:${process.env.PORT ?? 3000}`;
-  const url = new URL('/api/meetup/past-events', host).toString();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const edges: any[] = await fetchPastEvents(url);
+  const edges = await getPastEventEdges();
 
   const stats = [
     { index: "01", icon: CalendarDays, label: "Sessions", value: `${edges.length} Hosted` },
