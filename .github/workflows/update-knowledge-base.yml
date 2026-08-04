@@ -21,17 +21,27 @@ jobs:
 
       - run: npm ci
 
+      # No AWS credentials needed: the generator pulls the roster from the
+      # deployed site's /api/team endpoint, projects from the public GitHub
+      # org, and events directly from Meetup. GITHUB_TOKEN just lifts the
+      # GitHub API rate limit; MEETUP_API_TOKEN is the persisted-query hash
+      # for Meetup events; KB_SITE_URL overrides which deployment to read.
       - name: Generate knowledge base
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MEETUP_API_TOKEN: ${{ secrets.MEETUP_API_TOKEN }}
         run: npx tsx scripts/generate-knowledge-base.ts
 
+      # No [skip ci] tag: this workflow only runs on schedule/dispatch (never on
+      # push), so there is no self-trigger loop to prevent — and crucially,
+      # Vercel skips deployments whose commit message contains [skip ci], which
+      # would leave the freshly generated knowledge base un-deployed. The
+      # chatbot imports knowledge-base.json at build time, so the push must
+      # trigger a Vercel rebuild for new data to actually go live.
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/knowledge-base.json
-          git diff --staged --quiet || git commit -m "chore: refresh chatbot knowledge base [skip ci]"
+          git diff --staged --quiet || git commit -m "chore: refresh chatbot knowledge base"
           git push

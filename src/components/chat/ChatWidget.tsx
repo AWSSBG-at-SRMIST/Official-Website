@@ -93,7 +93,7 @@ function renderMarkdown(text: string): React.ReactNode {
 }
 
 export default function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -185,6 +185,7 @@ export default function ChatWidget() {
       });
     } finally {
       setIsLoading(false);
+      textareaRef.current?.focus();
     }
   }
 
@@ -382,7 +383,6 @@ export default function ChatWidget() {
                     }}
                     onKeyDown={handleKeyDown}
                     placeholder="Ask about AWS SBG…"
-                    disabled={isLoading}
                     rows={1}
                     maxLength={500}
                     aria-label="Message"
