@@ -200,22 +200,39 @@ export default function ChatWidget() {
   const isStreaming = isLoading && lastMsg?.role === "assistant" && !!lastMsg.content;
   const canSend = input.trim().length > 0 && !isLoading;
 
+  // Click-outside to close
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (!(e.target as Element).closest("[data-chat-widget]")) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [isOpen]);
+
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50">
+    // Side-tab anchored to left edge, vertically centered
+    <div
+      data-chat-widget
+      className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-row items-center"
+    >
+      {/* Panel — opens to the RIGHT of the tab, never covers the launcher */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="panel"
-            initial={{ opacity: 0, scale: 0.94, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 10 }}
-            transition={{ type: "spring", stiffness: 380, damping: 32 }}
-            style={{ transformOrigin: "bottom right" }}
-            className="absolute right-0 bottom-[68px] w-[min(340px,calc(100vw-40px))] sm:w-[380px]"
+            initial={{ opacity: 0, x: -16, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -16, scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 34 }}
+            style={{ transformOrigin: "left center" }}
+            className="w-[min(340px,calc(100vw-56px))] sm:w-[370px]"
           >
             <div
-              className="flex flex-col overflow-hidden border-2 border-primary/35 bg-surface-container-lowest shadow-[0_8px_48px_rgba(168,85,247,0.15),0_2px_12px_rgba(0,0,0,0.5)]"
-              style={{ height: "min(560px, calc(100dvh - 96px))" }}
+              className="flex flex-col overflow-hidden border-2 border-primary/35 bg-surface-container-lowest shadow-[0_8px_48px_rgba(168,85,247,0.18),0_2px_16px_rgba(0,0,0,0.6)]"
+              style={{ height: "min(540px, calc(100dvh - 80px))" }}
             >
               {/* Header */}
               <div className="shrink-0 px-4 py-3 flex items-center justify-between bg-surface-container border-b-2 border-primary/20">
@@ -408,28 +425,33 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Launcher — square, on-brand */}
+      {/* Side tab launcher — sticks to left edge */}
       <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ x: 2 }}
+        whileTap={{ scale: 0.96 }}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className="h-13 w-13 bg-primary text-on-primary flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-[0_4px_24px_rgba(168,85,247,0.4)] hover:shadow-[0_4px_32px_rgba(168,85,247,0.55)] transition-shadow"
-        style={{ height: "52px", width: "52px" }}
+        className="flex flex-col items-center gap-2 bg-primary text-on-primary px-2.5 py-4 border-r-0 shadow-[2px_0_20px_rgba(168,85,247,0.35)] hover:shadow-[2px_0_28px_rgba(168,85,247,0.5)] transition-shadow focus-visible:outline-none shrink-0"
       >
         <AnimatePresence mode="wait" initial={false}>
           {isOpen ? (
-            <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X className="h-5 w-5" />
+            <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+              <X className="h-4 w-4" />
             </motion.span>
           ) : (
-            <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle className="h-5 w-5" />
+            <motion.span key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+              <Bot className="h-4 w-4" />
             </motion.span>
           )}
         </AnimatePresence>
+        <span
+          className="text-[9px] font-bold uppercase tracking-[0.18em] leading-none select-none"
+          style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+        >
+          Ask Bob
+        </span>
       </motion.button>
     </div>
   );

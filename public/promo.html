@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SBG at SRMIST</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #0a0613;
+  color: #f4f2f8;
+}
+
+/* subtle dot grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(168,85,247,.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ambient purple glow */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 70% 55% at 50% 55%, rgba(168,85,247,.07) 0%, transparent 70%);
+}
+
+/* scanlines */
+.scan {
+  position: fixed; inset: 0; z-index: 201; pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent 3px,
+    rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 4px
+  );
+}
+
+/* HUD corners */
+.hc {
+  position: fixed; z-index: 150;
+  width: 22px; height: 22px;
+  opacity: .6;
+}
+.hc-tl { top:20px;  left:20px;  border-top:1.5px solid #a855f7; border-left:1.5px solid #a855f7; }
+.hc-tr { top:20px;  right:20px; border-top:1.5px solid #a855f7; border-right:1.5px solid #a855f7; }
+.hc-bl { bottom:10px; left:20px;  border-bottom:1.5px solid #a855f7; border-left:1.5px solid #a855f7; }
+.hc-br { bottom:10px; right:20px; border-bottom:1.5px solid #a855f7; border-right:1.5px solid #a855f7; }
+
+/* progress bar */
+.prog {
+  position: fixed; bottom:0; left:0; height:2px; z-index:300;
+  background: linear-gradient(to right, #a855f7, #d946ef);
+  animation: prog 30s linear infinite;
+}
+@keyframes prog { from { width:0 } to { width:100% } }
+
+/* ── SCENES ──────────────────────────────────── */
+.scene {
+  position: fixed; inset: 0; z-index: 10;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(36px, 7vw, 100px);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.scene.show { opacity: 1; }
+
+/* shared label style */
+.lbl {
+  font-family: 'Space Grotesk', 'Arial Black', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.2vw, 13px);
+  letter-spacing: .28em;
+  color: #a855f7;
+  text-transform: uppercase;
+}
+
+/* shared display style */
+.disp {
+  font-family: 'Space Grotesk', 'Arial Black', Arial, sans-serif;
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.03em;
+  color: #f4f2f8;
+}
+
+/* ─── SCENE 1 · Logo + Identity · 2.5s ──────── */
+.s1 { align-items: center; }
+
+.s1-logo {
+  height: clamp(36px, 5vw, 56px);
+  width: auto;
+  opacity: 0; transform: scale(.92);
+  transition: opacity .5s ease .15s, transform .5s ease .15s;
+  margin-bottom: clamp(16px, 2.5vh, 24px);
+}
+.s1-name {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(11px, 1.5vw, 16px);
+  letter-spacing: .3em;
+  color: #f4f2f8;
+  text-transform: uppercase; text-align: center;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .5s ease .45s, transform .5s ease .45s;
+  margin-bottom: 18px;
+}
+.s1-rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #a855f7, #d946ef, transparent);
+  width: 0; opacity: 0;
+  transition: width .8s cubic-bezier(.16,1,.3,1) .8s, opacity .3s ease .8s;
+}
+.s1-est {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 11px; letter-spacing: .35em;
+  color: #a855f7; text-transform: uppercase; margin-top: 16px;
+  opacity: 0;
+  transition: opacity .5s ease 1.5s;
+}
+
+.s1.active .s1-logo { opacity: 1; transform: scale(1); }
+.s1.active .s1-name { opacity: 1; transform: translateY(0); }
+.s1.active .s1-rule { width: clamp(140px, 22vw, 260px); opacity: 1; }
+.s1.active .s1-est  { opacity: 1; }
+
+/* ─── SCENE 2 · Think Big. · 7.5s ──────────── */
+.s2 { align-items: flex-start; }
+
+.s2-eye {
+  margin-bottom: clamp(14px, 2.5vh, 24px);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .55s ease .2s, transform .55s ease .2s;
+}
+.s2-l1 {
+  display: block;
+  font-size: clamp(58px, 11vw, 138px);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .6s cubic-bezier(.16,1,.3,1) .5s, transform .6s cubic-bezier(.16,1,.3,1) .5s;
+}
+.s2-l2 {
+  display: block;
+  font-size: clamp(58px, 11vw, 138px);
+  background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .6s cubic-bezier(.16,1,.3,1) .95s, transform .6s cubic-bezier(.16,1,.3,1) .95s;
+}
+.s2-sub {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(11px, 1.4vw, 14px);
+  letter-spacing: .2em; color: #b4aec2;
+  text-transform: uppercase;
+  margin-top: clamp(18px, 3vh, 28px);
+  opacity: 0;
+  transition: opacity .55s ease 1.6s;
+}
+
+.s2.active .s2-eye { opacity: 1; transform: translateY(0); }
+.s2.active .s2-l1  { opacity: 1; transform: translateY(0); }
+.s2.active .s2-l2  { opacity: 1; transform: translateY(0); }
+.s2.active .s2-sub { opacity: 1; }
+
+/* ─── SCENE 3 · What We Build · 6s ─────────── */
+.s3 { align-items: flex-start; }
+
+.s3-lbl {
+  margin-bottom: clamp(22px, 4vh, 36px);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .5s ease .2s, transform .5s ease .2s;
+}
+.s3-items { display: flex; flex-direction: column; gap: clamp(10px, 2vh, 16px); }
+
+.s3-item {
+  display: flex; align-items: center;
+  gap: clamp(14px, 2vw, 22px);
+  font-family: 'Space Grotesk', 'Arial Black', Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 4.2vw, 54px);
+  letter-spacing: -.02em; line-height: 1;
+  color: #f4f2f8;
+  opacity: 0; clip-path: inset(0 100% 0 0);
+}
+.s3-bar {
+  flex-shrink: 0;
+  height: 2.5px; width: clamp(18px, 2.2vw, 32px);
+  background: linear-gradient(to right, #a855f7, #d946ef);
+}
+
+.s3.active .s3-lbl { opacity: 1; transform: translateY(0); }
+.s3.active .s3-i1  { opacity: 1; clip-path: inset(0 0% 0 0); transition: opacity .5s ease .5s,  clip-path .7s cubic-bezier(.16,1,.3,1) .5s; }
+.s3.active .s3-i2  { opacity: 1; clip-path: inset(0 0% 0 0); transition: opacity .5s ease .95s, clip-path .7s cubic-bezier(.16,1,.3,1) .95s; }
+.s3.active .s3-i3  { opacity: 1; clip-path: inset(0 0% 0 0); transition: opacity .5s ease 1.4s, clip-path .7s cubic-bezier(.16,1,.3,1) 1.4s; }
+
+/* ─── SCENE 4 · Open to All · 6s ───────────── */
+.s4 { align-items: center; }
+
+.s4-lbl {
+  margin-bottom: clamp(20px, 3.5vh, 32px);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .5s ease .25s, transform .5s ease .25s;
+}
+.s4-big {
+  font-size: clamp(38px, 7vw, 90px);
+  text-align: center;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .65s cubic-bezier(.16,1,.3,1) .5s, transform .65s cubic-bezier(.16,1,.3,1) .5s;
+}
+.s4-big span {
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.s4-small {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.8vw, 20px);
+  letter-spacing: .05em;
+  color: #f4f2f8;
+  text-align: center;
+  margin-top: clamp(14px, 2.5vh, 22px);
+  opacity: 0;
+  transition: opacity .55s ease 1.2s;
+}
+.s4-pill {
+  margin-top: clamp(18px, 3vh, 28px);
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  opacity: 0;
+  transition: opacity .55s ease 1.7s;
+}
+.s4-pill span {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.1vw, 12px);
+  letter-spacing: .22em; text-transform: uppercase;
+  border: 1.5px solid rgba(168,85,247,.45);
+  color: #a855f7;
+  padding: 6px 16px;
+}
+
+.s4.active .s4-lbl   { opacity: 1; transform: translateY(0); }
+.s4.active .s4-big   { opacity: 1; transform: translateY(0); }
+.s4.active .s4-small { opacity: 1; }
+.s4.active .s4-pill  { opacity: 1; }
+
+/* ─── SCENE 5 · Become a Builder · 8s ──────── */
+.s5 { align-items: center; }
+
+.s5-head {
+  font-size: clamp(40px, 7.5vw, 94px);
+  text-align: center;
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .7s cubic-bezier(.16,1,.3,1) .2s, transform .7s cubic-bezier(.16,1,.3,1) .2s;
+}
+.s5-head span {
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.s5-box {
+  margin-top: clamp(20px, 3.5vh, 32px);
+  border: 1.5px solid #a855f7;
+  padding: clamp(10px,1.5vh,14px) clamp(20px,3vw,32px);
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: .25em; color: #a855f7; text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .55s ease 1s;
+}
+.s5-handles {
+  margin-top: clamp(20px, 3.5vh, 30px);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0;
+  transition: opacity .55s ease 1.5s;
+}
+.s5-ig  {
+  font-family: 'Space Grotesk', Arial, sans-serif; font-weight: 700;
+  font-size: clamp(13px, 1.8vw, 18px); letter-spacing: .05em; color: #f4f2f8;
+}
+.s5-web {
+  font-family: 'Space Grotesk', Arial, sans-serif; font-weight: 700;
+  font-size: clamp(11px, 1.3vw, 14px); letter-spacing: .15em;
+  background: linear-gradient(to right, #a855f7, #d946ef);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.s5.active .s5-head    { opacity: 1; transform: translateY(0); }
+.s5.active .s5-box     { opacity: 1; }
+.s5.active .s5-handles { opacity: 1; }
+</style>
+
+<div class="scan"></div>
+<div class="hc hc-tl"></div>
+<div class="hc hc-tr"></div>
+<div class="hc hc-bl"></div>
+<div class="hc hc-br"></div>
+<div class="prog"></div>
+
+<!-- SCENE 1 · Identity -->
+<div class="scene s1" id="s1">
+  <img class="s1-logo" src="logo.png" alt="AWS SBG at SRMIST">
+  <div class="s1-name">AWS Student Builder Group at SRMIST</div>
+  <div class="s1-rule"></div>
+  <div class="s1-est">EST.&nbsp;2025</div>
+</div>
+
+<!-- SCENE 2 · Tagline -->
+<div class="scene s2" id="s2">
+  <div class="lbl s2-eye">AWS &middot; AI &middot; Cloud &middot; Open Source</div>
+  <div class="disp">
+    <span class="s2-l1">Think Big.</span>
+    <span class="s2-l2">Build Bigger.</span>
+  </div>
+  <div class="s2-sub">SRM Institute of Science and Technology, KTR</div>
+</div>
+
+<!-- SCENE 3 · What We Build -->
+<div class="scene s3" id="s3">
+  <div class="lbl s3-lbl">What We Build</div>
+  <div class="s3-items">
+    <div class="s3-item s3-i1"><span class="s3-bar"></span>Real AWS Projects</div>
+    <div class="s3-item s3-i2"><span class="s3-bar"></span>Workshops &amp; Certifications</div>
+    <div class="s3-item s3-i3"><span class="s3-bar"></span>Open Source Software</div>
+  </div>
+</div>
+
+<!-- SCENE 4 · Open to All -->
+<div class="scene s4" id="s4">
+  <div class="lbl s4-lbl">Who Can Join</div>
+  <div class="disp s4-big">Every Branch.<br><span>Every Year.</span></div>
+  <div class="s4-small">No prior experience required.</div>
+  <div class="s4-pill">
+    <span>Technical</span>
+    <span>Corporate</span>
+    <span>Creatives</span>
+  </div>
+</div>
+
+<!-- SCENE 5 · CTA -->
+<div class="scene s5" id="s5">
+  <div class="disp s5-head">Become a<br><span>Builder.</span></div>
+  <div class="s5-box">Recruitments Opening Soon</div>
+  <div class="s5-handles">
+    <span class="s5-ig">@awssbg.at.srmist</span>
+    <span class="s5-web">awssbg-srmist.in</span>
+  </div>
+</div>
+
+<script>
+  // S1=2.5s, S2=7.5s, S3=6s, S4=6s, S5=8s → total 30s
+  var SCENES = [
+    { id:'s1', hold: 2100 },
+    { id:'s2', hold: 7100 },
+    { id:'s3', hold: 5600 },
+    { id:'s4', hold: 5600 },
+    { id:'s5', hold: 7600 },
+  ];
+  var FADE = 400;
+
+  function run(i) {
+    var el = document.getElementById(SCENES[i].id);
+    el.classList.add('show');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        el.classList.add('active');
+      });
+    });
+    setTimeout(function() {
+      el.classList.remove('show', 'active');
+      setTimeout(function() { run((i + 1) % SCENES.length); }, FADE);
+    }, SCENES[i].hold);
+  }
+
+  run(0);
+</script>
+</html>
