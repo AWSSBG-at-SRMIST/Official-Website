@@ -14,7 +14,7 @@ export function BuildTogetherCta() {
           </p>
         </div>
         <a
-          href="https://www.meetup.com/awssbg-srmist/"
+          href="https://www.meetup.com/awssbg-at-srmist/"
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 bg-primary text-on-primary px-8 py-4 font-bold uppercase tracking-wide hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-95 duration-200"

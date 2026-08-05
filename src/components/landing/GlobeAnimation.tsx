@@ -296,7 +296,7 @@ export function GlobeAnimation() {
 
   return (
     <div
-      className="relative h-[260px] sm:h-[300px] w-full mb-6 pointer-events-none -z-10 overflow-hidden lg:absolute lg:inset-0 lg:h-[90%] lg:mb-0"
+      className="relative h-[260px] sm:h-[300px] w-full mb-6 pointer-events-none -z-10 overflow-hidden lg:overflow-visible lg:absolute lg:inset-0 lg:h-[90%] lg:mb-0"
     >
       <div
         ref={containerRef}

@@ -106,9 +106,9 @@ const organizationSchema = {
     },
   },
   sameAs: [
-    "https://www.instagram.com/awssbg.srmist/",
-    "https://in.linkedin.com/company/awssbg-srmist",
-    "https://www.meetup.com/awssbg-srmist/",
+    "https://www.instagram.com/awssbg.at.srmist/",
+    "https://www.linkedin.com/company/awssbg-at-srmist",
+    "https://www.meetup.com/awssbg-at-srmist/",
     "https://github.com/AWSSBG-at-SRMIST",
   ],
   memberOf: {

@@ -3,11 +3,11 @@ import { SiMeetup, SiWhatsapp, SiInstagram, SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 
 const SOCIALS = [
-  { href: "https://www.instagram.com/awssbg.srmist/", label: "Instagram", icon: SiInstagram },
-  { href: "https://in.linkedin.com/company/awssbg-srmist", label: "LinkedIn", icon: FaLinkedin },
-  { href: "https://www.meetup.com/awssbg-srmist/", label: "Meetup", icon: SiMeetup },
+  { href: "https://www.instagram.com/awssbg.at.srmist/", label: "Instagram", icon: SiInstagram },
+  { href: "https://www.linkedin.com/company/awssbg-at-srmist", label: "LinkedIn", icon: FaLinkedin },
+  { href: "https://www.meetup.com/awssbg-at-srmist/", label: "Meetup", icon: SiMeetup },
   { href: "https://github.com/AWSSBG-at-SRMIST", label: "GitHub", icon: SiGithub },
-  { href: "https://chat.whatsapp.com/Ckmq15FNNjVIGftTJhIlgZ", label: "WhatsApp Community", icon: SiWhatsapp },
+  { href: "https://chat.whatsapp.com/D9OKcELrR1E6Ch2fIqRwuZ", label: "WhatsApp Community", icon: SiWhatsapp },
 ];
 
 export function Footer() {
@@ -19,7 +19,7 @@ export function Footer() {
         <div className="flex flex-col items-center gap-5 md:flex-row md:justify-between md:gap-6">
           <div className="flex flex-col items-center gap-1 md:items-start text-center md:text-left text-on-surface-variant text-sm font-medium">
             <span>&copy; {year} AWS Student Builder Group at SRMIST</span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 whitespace-nowrap text-xs md:text-sm">
               Made with <Heart size={12} className="text-primary fill-primary" /> by Tech Team @AWS SBG at SRMIST.
             </span>
           </div>
