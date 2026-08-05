@@ -30,11 +30,11 @@ function renderInline(text: string): React.ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**") && part.length > 4)
-      return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-semibold text-on-surface">{part.slice(2, -2)}</strong>;
     if (part.startsWith("*") && part.endsWith("*") && part.length > 2)
       return <em key={i}>{part.slice(1, -1)}</em>;
     if (part.startsWith("`") && part.endsWith("`") && part.length > 2)
-      return <code key={i} className="text-[0.8em] bg-black/10 rounded px-1 font-mono">{part.slice(1, -1)}</code>;
+      return <code key={i} className="text-[0.8em] bg-primary/15 text-primary px-1 font-mono">{part.slice(1, -1)}</code>;
     return part || null;
   });
 }
@@ -55,12 +55,12 @@ function renderMarkdown(text: string): React.ReactNode {
     }
 
     if (line.startsWith("### ")) {
-      out.push(<p key={i} className="font-semibold mt-1">{renderInline(line.slice(4))}</p>);
+      out.push(<p key={i} className="font-semibold mt-1 text-on-surface">{renderInline(line.slice(4))}</p>);
       i++;
       continue;
     }
     if (line.startsWith("## ")) {
-      out.push(<p key={i} className="font-bold mt-2">{renderInline(line.slice(3))}</p>);
+      out.push(<p key={i} className="font-bold mt-2 text-on-surface">{renderInline(line.slice(3))}</p>);
       i++;
       continue;
     }
@@ -89,7 +89,7 @@ function renderMarkdown(text: string): React.ReactNode {
     i++;
   }
 
-  return <div className="space-y-0.5 text-sm">{out}</div>;
+  return <div className="space-y-0.5 text-sm text-on-surface">{out}</div>;
 }
 
 export default function ChatWidget() {
@@ -206,47 +206,47 @@ export default function ChatWidget() {
         {isOpen && (
           <motion.div
             key="panel"
-            initial={{ opacity: 0, scale: 0.94, x: 10 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.94, x: 10 }}
+            initial={{ opacity: 0, scale: 0.94, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 10 }}
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
             style={{ transformOrigin: "bottom right" }}
-            className="absolute right-0 bottom-[68px] w-[min(340px,calc(100vw-40px))] sm:w-[384px]"
+            className="absolute right-0 bottom-[68px] w-[min(340px,calc(100vw-40px))] sm:w-[380px]"
           >
             <div
-              className="flex flex-col rounded-2xl overflow-hidden border border-border/60 bg-background shadow-[0_8px_40px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.06)]"
+              className="flex flex-col overflow-hidden border-2 border-primary/35 bg-surface-container-lowest shadow-[0_8px_48px_rgba(168,85,247,0.15),0_2px_12px_rgba(0,0,0,0.5)]"
               style={{ height: "min(560px, calc(100dvh - 96px))" }}
             >
               {/* Header */}
-              <div className="shrink-0 px-4 py-3.5 flex items-center justify-between bg-primary">
+              <div className="shrink-0 px-4 py-3 flex items-center justify-between bg-surface-container border-b-2 border-primary/20">
                 <div className="flex items-center gap-3">
                   <div className="relative shrink-0">
-                    <div className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center ring-2 ring-white/30">
-                      <Bot className="h-[18px] w-[18px] text-white" />
+                    <div className="h-8 w-8 bg-primary/15 border border-primary/30 flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-primary" />
                     </div>
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-primary" />
+                    <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 bg-emerald-400 border border-surface-container" />
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-sm leading-snug">Bob</p>
-                    <p className="text-white/65 text-[11px] leading-snug mt-0.5">AWS SBG at SRMIST · Online</p>
+                    <p className="text-on-surface font-bold text-sm leading-snug tracking-widest uppercase">Bob</p>
+                    <p className="text-on-surface-variant text-[10px] leading-snug mt-0.5 tracking-wide">AWS SBG at SRMIST · Online</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-white/60 hover:text-white hover:bg-white/15 transition-all p-1.5 rounded-full"
+                  className="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all p-1.5 border border-transparent hover:border-primary/25"
                   aria-label="Close chat"
                 >
-                  <X className="h-[18px] w-[18px]" strokeWidth={2.5} />
+                  <X className="h-4 w-4" strokeWidth={2} />
                 </button>
               </div>
 
-              {/* Messages + scroll-down button */}
+              {/* Messages + scroll-down */}
               <div className="relative flex-1 min-h-0">
                 <div
                   ref={scrollRef}
                   onScroll={handleScroll}
                   className="h-full overflow-y-auto px-4 py-4"
-                  style={{ scrollbarWidth: "thin", scrollbarColor: "hsl(var(--border)) transparent" }}
+                  style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(168,85,247,0.25) transparent" }}
                 >
                   <div className="flex flex-col gap-2">
                     {messages.map((msg, i) => {
@@ -265,18 +265,18 @@ export default function ChatWidget() {
                           className={`flex items-end gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"} ${isGrouped ? "mt-0.5" : "mt-1"}`}
                         >
                           {msg.role === "assistant" && (
-                            <div className={`shrink-0 mb-0.5 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center ${isGrouped ? "invisible" : ""}`}>
+                            <div className={`shrink-0 mb-0.5 h-6 w-6 bg-primary/10 border border-primary/25 flex items-center justify-center ${isGrouped ? "invisible" : ""}`}>
                               <Bot className="h-3.5 w-3.5 text-primary" />
                             </div>
                           )}
 
                           <div
-                            className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 ${
+                            className={`max-w-[78%] px-3.5 py-2.5 ${
                               msg.role === "user"
-                                ? "bg-primary text-primary-foreground rounded-br-[4px]"
+                                ? "bg-primary text-on-primary"
                                 : msg.isError
-                                ? "bg-red-50 text-red-800 border border-red-200 rounded-bl-[4px]"
-                                : "bg-card border border-border/50 text-foreground rounded-bl-[4px] shadow-sm"
+                                ? "bg-red-950/40 text-red-300 border border-red-800/40"
+                                : "bg-surface-container border border-on-surface/10 text-on-surface-variant"
                             }`}
                           >
                             {msg.role === "assistant" ? renderMarkdown(msg.content) : (
@@ -287,7 +287,7 @@ export default function ChatWidget() {
                               <motion.span
                                 animate={{ opacity: [1, 0, 1] }}
                                 transition={{ duration: 0.9, repeat: Infinity }}
-                                className="inline-block w-[2px] h-[13px] bg-current ml-0.5 align-middle rounded-full"
+                                className="inline-block w-[2px] h-[13px] bg-current ml-0.5 align-middle"
                               />
                             )}
                           </div>
@@ -304,16 +304,16 @@ export default function ChatWidget() {
                           transition={{ duration: 0.18 }}
                           className="flex items-end gap-2 justify-start mt-1"
                         >
-                          <div className="shrink-0 mb-0.5 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center">
+                          <div className="shrink-0 mb-0.5 h-6 w-6 bg-primary/10 border border-primary/25 flex items-center justify-center">
                             <Bot className="h-3.5 w-3.5 text-primary" />
                           </div>
-                          <div className="bg-card border border-border/50 rounded-2xl rounded-bl-[4px] px-4 py-3 shadow-sm">
+                          <div className="bg-surface-container border border-on-surface/10 px-4 py-3">
                             <div className="flex items-center gap-[5px]">
                               {[0, 1, 2].map((j) => (
                                 <motion.span
                                   key={j}
-                                  className="h-[6px] w-[6px] rounded-full bg-muted-foreground/50"
-                                  animate={{ y: ["0%", "-55%", "0%"] }}
+                                  className="h-[5px] w-[5px] bg-primary/50"
+                                  animate={{ y: ["0%", "-60%", "0%"] }}
                                   transition={{ duration: 0.7, repeat: Infinity, delay: j * 0.13, ease: "easeInOut" }}
                                 />
                               ))}
@@ -336,7 +336,7 @@ export default function ChatWidget() {
                             <button
                               key={action.label}
                               onClick={() => handleSend(action.message)}
-                              className="text-[11px] font-medium px-3 py-1.5 rounded-full border border-primary/35 text-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 transition-all duration-150"
+                              className="text-[10px] font-bold px-3 py-1.5 border border-primary/35 text-primary hover:bg-primary hover:text-on-primary focus-visible:outline-none transition-all duration-150 uppercase tracking-widest"
                             >
                               {action.label}
                             </button>
@@ -357,7 +357,7 @@ export default function ChatWidget() {
                       exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ duration: 0.15 }}
                       onClick={() => scrollToBottom()}
-                      className="absolute bottom-3 right-3 h-7 w-7 rounded-full bg-background border border-border shadow-md flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                      className="absolute bottom-3 right-3 h-7 w-7 bg-surface-container border border-on-surface/15 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/35 transition-colors"
                       aria-label="Scroll to latest message"
                     >
                       <ChevronDown className="h-4 w-4" />
@@ -366,43 +366,40 @@ export default function ChatWidget() {
                 </AnimatePresence>
 
                 {showScrollDown && (
-                  <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-background to-transparent" />
+                  <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-surface-container-lowest to-transparent" />
                 )}
               </div>
 
-              {/* Input area */}
-              <div className="shrink-0 border-t border-border/60 px-3 pt-2.5 pb-3">
-                <div className="flex items-end gap-2 rounded-xl border border-border/60 bg-muted/40 px-3 py-2 transition-all focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/15">
+              {/* Input */}
+              <div className="shrink-0 border-t-2 border-primary/15 px-3 pt-2.5 pb-3 bg-surface-container">
+                <div className="flex items-end gap-2 border border-on-surface/15 bg-surface-container-lowest px-3 py-2 transition-colors focus-within:border-primary/50">
                   <textarea
                     ref={textareaRef}
                     value={input}
-                    onChange={(e) => {
-                      setInput(e.target.value);
-                      adjustHeight();
-                    }}
+                    onChange={(e) => { setInput(e.target.value); adjustHeight(); }}
                     onKeyDown={handleKeyDown}
                     placeholder="Ask about AWS SBG…"
                     disabled={isLoading}
                     rows={1}
                     maxLength={500}
                     aria-label="Message"
-                    className="flex-1 bg-transparent text-sm resize-none outline-none placeholder:text-muted-foreground/55 disabled:opacity-50 leading-relaxed py-0.5 min-h-[22px] max-h-[96px]"
+                    className="flex-1 bg-transparent text-sm text-on-surface resize-none outline-none placeholder:text-on-surface-variant/35 disabled:opacity-50 leading-relaxed py-0.5 min-h-[22px] max-h-[96px]"
                     style={{ scrollbarWidth: "none" }}
                   />
                   <button
                     onClick={() => handleSend()}
                     disabled={!canSend}
                     aria-label="Send message"
-                    className={`shrink-0 h-8 w-8 rounded-lg flex items-center justify-center transition-all duration-150 ${
+                    className={`shrink-0 h-8 w-8 flex items-center justify-center transition-all duration-150 ${
                       canSend
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-                        : "bg-transparent text-muted-foreground/40 cursor-not-allowed"
+                        ? "bg-primary text-on-primary hover:bg-primary/90"
+                        : "bg-transparent text-on-surface-variant/25 cursor-not-allowed"
                     }`}
                   >
                     <Send className="h-[15px] w-[15px]" />
                   </button>
                 </div>
-                <p className="text-[10px] text-muted-foreground/45 text-center mt-1.5 select-none">
+                <p className="text-[10px] text-on-surface-variant/30 text-center mt-1.5 select-none uppercase tracking-widest">
                   Enter to send · Shift+Enter for new line
                 </p>
               </div>
@@ -411,24 +408,25 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Launcher */}
+      {/* Launcher — square, on-brand */}
       <motion.button
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.94 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className="h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_18px_rgba(0,0,0,0.20)] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow hover:shadow-[0_4px_22px_rgba(0,0,0,0.26)]"
+        className="h-13 w-13 bg-primary text-on-primary flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-[0_4px_24px_rgba(168,85,247,0.4)] hover:shadow-[0_4px_32px_rgba(168,85,247,0.55)] transition-shadow"
+        style={{ height: "52px", width: "52px" }}
       >
         <AnimatePresence mode="wait" initial={false}>
           {isOpen ? (
             <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </motion.span>
           ) : (
             <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle className="h-6 w-6" />
+              <MessageCircle className="h-5 w-5" />
             </motion.span>
           )}
         </AnimatePresence>
