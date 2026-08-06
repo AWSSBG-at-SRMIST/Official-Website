@@ -76,7 +76,6 @@ export default async function ProjectsPage() {
                       fill
                       className="object-cover"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      unoptimized
                     />
                   </div>
 
