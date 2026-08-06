@@ -213,26 +213,26 @@ export default function ChatWidget() {
   }, [isOpen]);
 
   return (
-    // Side-tab anchored to left edge, vertically centered
+    /* Side-tab anchored to right edge, vertically centered */
     <div
       data-chat-widget
-      className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-row items-center"
+      className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-row items-center"
     >
-      {/* Panel — opens to the RIGHT of the tab, never covers the launcher */}
+      {/* Panel — opens to the LEFT of the tab, never covers the launcher */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="panel"
-            initial={{ opacity: 0, x: -16, scale: 0.97 }}
+            initial={{ opacity: 0, x: 16, scale: 0.97 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -16, scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 34 }}
-            style={{ transformOrigin: "left center" }}
+            exit={{ opacity: 0, x: 16, scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+            style={{ transformOrigin: "right center" }}
             className="w-[min(340px,calc(100vw-56px))] sm:w-[370px]"
           >
             <div
-              className="flex flex-col overflow-hidden border-2 border-primary/35 bg-surface-container-lowest shadow-[0_8px_48px_rgba(168,85,247,0.18),0_2px_16px_rgba(0,0,0,0.6)]"
-              style={{ height: "min(540px, calc(100dvh - 80px))" }}
+              className="flex flex-col overflow-hidden border-2 border-primary/35 bg-surface-container-lowest shadow-[-8px_0_48px_rgba(168,85,247,0.18),-2px_0_16px_rgba(0,0,0,0.6)]"
+              style={{ height: "min(540px, calc(100dvh - 48px))" }}
             >
               {/* Header */}
               <div className="shrink-0 px-4 py-3 flex items-center justify-between bg-surface-container border-b-2 border-primary/20">
@@ -425,15 +425,15 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Side tab launcher — sticks to left edge */}
+      {/* Side-tab launcher — sticks to right edge */}
       <motion.button
-        whileHover={{ x: 2 }}
+        whileHover={{ x: -2 }}
         whileTap={{ scale: 0.96 }}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className="flex flex-col items-center gap-2 bg-primary text-on-primary px-2.5 py-4 border-r-0 shadow-[2px_0_20px_rgba(168,85,247,0.35)] hover:shadow-[2px_0_28px_rgba(168,85,247,0.5)] transition-shadow focus-visible:outline-none shrink-0"
+        className="flex flex-col items-center gap-2 bg-primary text-on-primary px-2.5 py-4 border-l-0 shadow-[-2px_0_20px_rgba(168,85,247,0.35)] hover:shadow-[-2px_0_28px_rgba(168,85,247,0.5)] transition-shadow focus-visible:outline-none shrink-0"
       >
         <AnimatePresence mode="wait" initial={false}>
           {isOpen ? (
@@ -448,7 +448,7 @@ export default function ChatWidget() {
         </AnimatePresence>
         <span
           className="text-[9px] font-bold uppercase tracking-[0.18em] leading-none select-none"
-          style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+          style={{ writingMode: "vertical-rl" }}
         >
           Ask Bob
         </span>
