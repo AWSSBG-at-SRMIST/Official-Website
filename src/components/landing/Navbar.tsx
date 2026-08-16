@@ -17,6 +17,8 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const RECRUITMENTS_URL = "https://recruitments.awssbg-srmist.in";
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -63,12 +65,14 @@ export function Navbar() {
         </div>
 
         <div className="flex justify-end items-center gap-3">
-          <Link
-            href="/recruitments"
+          <a
+            href={RECRUITMENTS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:inline-block text-xs uppercase tracking-wide font-bold px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300"
           >
             Recruitments
-          </Link>
+          </a>
           <button
             aria-label="Toggle menu"
             onClick={() => setIsOpen((v) => !v)}
@@ -99,13 +103,15 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/recruitments"
+              <a
+                href={RECRUITMENTS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
                 className="text-primary font-bold block py-3"
               >
                 Recruitments
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}

@@ -141,7 +141,7 @@ Sub-domains: Digital Design, Media Production.
 
 ## RECRUITMENTS
 
-Recruitments are not currently open. Applications for the next cohort will open shortly — check the Recruitments page on the website (https://awssbg-srmist.in/recruitments) or follow our social media for announcements. No prior experience is required to apply. Open to every department and every year.
+Recruitments are open. Apply at https://recruitments.awssbg-srmist.in — chat with Nova, our AI recruiter, no static form. No prior experience is required to apply. Open to every department and every year.
 
 ## EVENTS & ACHIEVEMENTS
 

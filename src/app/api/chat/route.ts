@@ -53,7 +53,11 @@ ${knowledgeBase.content}`;
 
   try {
     const stream = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      // llama-3.3-70b-versatile is decommissioned on Groq as of 2026-08-16 —
+      // moved to gpt-oss-20b (cheaper and faster than gpt-oss-120b, same
+      // family already proven for the harder resume-scoring task in
+      // Recruitment-Portal).
+      model: "openai/gpt-oss-20b",
       messages: [
         { role: "system", content: systemPrompt },
         ...safeHistory,
