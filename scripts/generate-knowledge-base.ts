@@ -141,7 +141,7 @@ Sub-domains: Digital Design, Media Production.
 
 ## RECRUITMENTS
 
-Recruitments are open. Apply at https://recruitments.awssbg-srmist.in — chat with Nova, our AI recruiter, no static form. No prior experience is required to apply. Open to every department and every year.
+Recruitments are open. Apply at https://recruitments.awssbg-srmist.in — chat with Nova, our AI recruiter, no static form. No prior experience is required to apply. This recruitment cycle is open to 1st and 2nd year CSE students only (Core/C-Tech, CINTEL, NWC, DSBS).
 
 ## EVENTS & ACHIEVEMENTS
 
