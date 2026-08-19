@@ -25,7 +25,11 @@ export async function getHonoraryMembers(): Promise<HonoraryMember[]> {
     const result = await ddbDocClient.send(
       new ScanCommand({ TableName: "sbg-honorary-members" })
     );
-    return (result.Items ?? []) as HonoraryMember[];
+    const items = (result.Items ?? []) as HonoraryMember[];
+    // Industrial mentors are temporarily hidden from the public Team page —
+    // the records themselves are untouched in DynamoDB, just filtered out
+    // of what gets rendered. Remove this filter to bring them back.
+    return items.filter((m) => m.tag !== "INDUSTRIAL_MENTOR");
   } catch (error) {
     console.error("Failed to fetch honorary members from DynamoDB.", error);
     return [];
