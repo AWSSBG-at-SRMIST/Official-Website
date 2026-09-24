@@ -83,20 +83,9 @@
 }
 
 @media (max-width: 768px) {
-  /* A grid instead of a sideways-scrolling row: on phones half the tabs sat
-     off-screen with nothing to show they were there. */
   .team-category-scroller {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     margin-bottom: 1.5rem;
     gap: 0.5rem;
-    overflow-x: visible;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .team-category-item {
-    text-align: center;
   }
 
   .team-category-item {
@@ -114,7 +103,6 @@
 
 @media (max-width: 480px) {
   .team-category-scroller {
-    grid-template-columns: repeat(2, 1fr);
     margin-bottom: 1.25rem;
   }
 
