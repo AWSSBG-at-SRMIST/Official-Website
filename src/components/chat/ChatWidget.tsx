@@ -26,9 +26,36 @@ const SUGGESTED_ACTIONS = [
   { label: "Contact Us", message: "How can I contact AWS SBG at SRMIST?" },
 ];
 
+// The model sometimes answers with markdown tables, <br> tags or <url>
+// autolinks despite the prompt. None of that renders in this window, so turn
+// table rows into bullets and strip the rest before rendering.
+function normalizeReply(text: string): string {
+  const lines = text
+    .replace(/\s*<br\s*\/?>\s*/gi, ", ")
+    .replace(/<(https?:\/\/[^>\s]+)>/g, "$1")
+    .split("\n");
+  const isTableRow = (l: string) => /^\s*\|.*\|\s*$/.test(l);
+  const isDivider = (l: string) => /^\s*\|?[\s:|-]+\|?\s*$/.test(l) && l.includes("-");
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!isTableRow(line)) {
+      out.push(line);
+      continue;
+    }
+    if (isDivider(line)) continue;
+    if (i + 1 < lines.length && isDivider(lines[i + 1])) continue; // header row
+    const cells = line.split("|").map((c) => c.trim()).filter(Boolean);
+    if (cells.length > 0) out.push(`- ${cells.join(" — ")}`);
+  }
+  return out.join("\n");
+}
+
 function renderInline(text: string): React.ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|https?:\/\/[^\s)]+[^\s).,])/g);
   return parts.map((part, i) => {
+    if (/^https?:\/\//.test(part))
+      return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 break-all">{part.replace(/^https?:\/\/(www\.)?/, "")}</a>;
     if (part.startsWith("**") && part.endsWith("**") && part.length > 4)
       return <strong key={i} className="font-semibold text-on-surface">{part.slice(2, -2)}</strong>;
     if (part.startsWith("*") && part.endsWith("*") && part.length > 2)
@@ -41,7 +68,7 @@ function renderInline(text: string): React.ReactNode[] {
 
 function renderMarkdown(text: string): React.ReactNode {
   if (!text) return null;
-  const lines = text.split("\n");
+  const lines = normalizeReply(text).split("\n");
   const out: React.ReactNode[] = [];
   let i = 0;
 

@@ -160,20 +160,34 @@ function buildTeamSection(members: Member[], honorary: HonoraryMember[]): string
   return sections.join("\n\n");
 }
 
+// One readable line from a repo description: the first sentence, and if
+// that's long, the part before its first dash (or last comma). Never cut
+// mid-phrase with "…" — Bob repeats the fragment word for word.
+function projectSummary(description: string): string {
+  // NFKC turns styled Unicode (𝗚𝗿𝗲𝗲𝗻) back into plain letters.
+  const sentence = description.normalize("NFKC").trim().split(/(?<=\.)\s/)[0].replace(/\.+$/, "");
+  if (sentence.length <= 160) return sentence;
+  const dash = sentence.search(/ [—–] /);
+  if (dash >= 40) return sentence.slice(0, dash);
+  const comma = sentence.lastIndexOf(", ", 160);
+  return comma >= 40 ? sentence.slice(0, comma) : sentence;
+}
+
 function buildProjectsSection(repos: GitHubRepo[]): string {
-  const intro =
-    "Everything we ship lives on our GitHub organization — built by our members on AWS and open for the world to use. See https://awssbg-srmist.in/projects or https://github.com/AWSSBG-at-SRMIST.";
+  // Deliberately brief: a name and one line each. Links, tags and stars made
+  // Bob answer with wide tables that the chat window can't display, and the
+  // Projects page is the better place for details anyway.
   const items = repos.map((r) => {
-    let line = `- **${r.name}**${r.language ? ` (${r.language})` : ""}`;
-    if (r.description) line += ` — ${r.description.trim().replace(/\.+$/, "")}`;
-    const meta: string[] = [];
-    if (r.topics?.length) meta.push(`Tags: ${r.topics.join(", ")}`);
-    if (r.stargazers_count) meta.push(`Stars: ${r.stargazers_count}`);
-    meta.push(`GitHub: ${r.html_url}`);
-    if (r.homepage) meta.push(`Demo: ${r.homepage}`);
-    return `${line}. ${meta.join(". ")}.`;
+    const summary = r.description ? projectSummary(r.description) : null;
+    // Say so explicitly when there's no description, or Bob invents one.
+    return `- **${r.name}** — ${summary ?? "no description yet (details on the Projects page)"}`;
   });
-  return `## PROJECTS\n\n${intro}\n\n${items.join("\n")}`;
+  return [
+    "## PROJECTS",
+    "Everything we ship is open source on our GitHub organization, built by our members.",
+    items.join("\n"),
+    "When asked about projects, give this short overview (one line per project) and point the visitor to the Projects page for details, demos and code: https://awssbg-srmist.in/projects",
+  ].join("\n\n");
 }
 
 function buildEventsSection(events: EventNode[]): string {
