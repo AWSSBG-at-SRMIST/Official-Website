@@ -37,10 +37,12 @@ export function TeamCategoryScroller({
   };
 
   const itemVariants = {
+    // Dimmed but still readable: at opacity 0.4 with a blur, inactive tab
+    // labels were close to invisible on the dark background.
     inactive: {
-      scale: 0.85,
-      opacity: 0.4,
-      filter: "blur(0.5px)",
+      scale: 0.92,
+      opacity: 0.75,
+      filter: "blur(0px)",
       x: 0,
     },
     active: {
