@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "import:honorary-members": "node --env-file=.env.local scripts/import-honorary-members.mjs",
-    "generate:knowledge-base": "tsx --env-file=.env.local scripts/generate-knowledge-base.ts"
+    "generate:knowledge-base": "tsx scripts/generate-knowledge-base.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1071.0",
