@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { BackgroundNetwork } from "@/components/layout/BackgroundNetwork";
-import { Loader } from "@/components/layout/Loader";
+import { Loader, INTRO_SEEN_SCRIPT } from "@/components/layout/Loader";
 import { Navbar } from "@/components/landing/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import ChatWidget from "@/components/chat/ChatWidget";
@@ -151,7 +151,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    // suppressHydrationWarning: INTRO_SEEN_SCRIPT sets data-intro-seen on
+    // <html> before React hydrates, which React would otherwise flag.
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SEEN_SCRIPT }} />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${geist.variable} antialiased`}
       >
